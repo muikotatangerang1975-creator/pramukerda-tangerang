@@ -54,6 +54,12 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
 .empty{text-align:center;color:var(--muted);padding:18px}
 .muted{color:var(--muted);font-size:12px}
 
+/* PICKER UNIT (SATU UNTUK SEMUA BAGIAN) */
+.unit-picker{position:sticky;top:8px;z-index:50;border:2px solid var(--g);box-shadow:0 8px 24px #1c493022}
+.unit-picker .field{margin-bottom:6px}
+.unit-picker .hint{margin:4px 0 0;font-size:12px}
+.curunit{display:inline-block;background:#e4f5ed;color:#187653;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:bold;margin-bottom:12px;line-height:1.4}
+
 /* PRESENTATION MODE & PROGRESS STYLES */
 .progress-bar-bg{background:#e0e8e4;border-radius:10px;height:12px;width:100%;overflow:hidden;margin-top:6px}
 .progress-bar-fill{background:var(--g);height:100%;width:0%;transition:width 0.4s ease}
@@ -64,6 +70,7 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
 .close-modal{position:absolute;top:15px;right:15px;background:#e0e0e0;border:0;border-radius:50%;width:32px;height:32px;cursor:pointer;font-weight:bold}
 .btn-flex{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .btn-flex button{flex:1;min-width:160px}
+.upload-box{background:#f4f7f5;border-radius:8px;padding:11px;margin:4px 0 14px}
 
 @media(max-width:620px){
  body{padding:16px 9px}
@@ -72,6 +79,7 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
  header{align-items:flex-start}
  h1{font-size:21px}
  .btn-flex{flex-direction:column}
+ .unit-picker{position:static}
 }
 </style>
 </head>
@@ -87,6 +95,24 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
  </div>
  <span class="pill" id="fbStatus">⏳ Menghubungkan…</span>
 </header>
+
+<!-- PILIH UNIT (SEKALI SAJA, BERLAKU UNTUK SEMUA BAGIAN) -->
+<section class="card unit-picker">
+ <div class="grid">
+  <div class="field">
+   <label for="unitType">Jenis Unit</label>
+   <select id="unitType">
+    <option value="Lembaga">Lembaga</option>
+    <option value="Komisi">Komisi</option>
+   </select>
+  </div>
+  <div class="field">
+   <label for="unitName">Nama Lembaga / Komisi</label>
+   <select id="unitName"></select>
+  </div>
+ </div>
+ <p class="hint">Cukup pilih di sini sekali. Pilihan berlaku untuk Program Umum, Rencana Program Kerja 2027, unduhan Word, dan Mode Presentasi.</p>
+</section>
 
 <!-- DASHBOARD PRESENTASI & PERSENTASE -->
 <section class="card presentation-card">
@@ -112,24 +138,12 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
 <div class="sectionhead">
  <div>
   <h2 style="margin:0 0 5px">Program Umum 2026 - 2030</h2>
-  <div class="muted">Pilih Lembaga atau Komisi untuk melihat program umum dan tahun pelaksanaannya.</div>
+  <div class="muted">Program umum dan tahun pelaksanaan untuk unit yang dipilih di atas.</div>
  </div>
  <span id="permission" class="status editable">Bisa diedit</span>
 </div>
 
-<div class="grid">
-  <div class="field">
-    <label for="unitType">Jenis Unit</label>
-    <select id="unitType">
-      <option value="Lembaga">Lembaga</option>
-      <option value="Komisi">Komisi</option>
-    </select>
-  </div>
-  <div class="field">
-    <label for="unitName">Nama Lembaga / Komisi</label>
-    <select id="unitName"></select>
-  </div>
-</div>
+<div class="curunit" id="curUnitA"></div>
 
 <div id="permissionNote" class="note"></div>
 
@@ -168,24 +182,11 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
 <h2>Rencana Program Kerja 2027</h2>
 
 <p class="hint">
- Pilih Lembaga atau Komisi, lalu isi tabel rencana program kerja 2027 (program kerja, tujuan, peserta, waktu &amp; tempat, biaya, mitra kerja, dan penanggung jawab).
+ Isi tabel rencana program kerja 2027 (program kerja, tujuan, peserta, waktu &amp; tempat, biaya, mitra kerja, dan penanggung jawab) untuk unit yang dipilih di atas.
  Kolom Program Umum untuk Komisi sudah terisi sesuai dokumen, baris baru bisa ditambahkan bila diperlukan.
 </p>
 
-<div class="grid">
- <div class="field">
-  <label for="planUnitType">Jenis Unit</label>
-  <select id="planUnitType">
-   <option>Lembaga</option>
-   <option>Komisi</option>
-  </select>
- </div>
-
- <div class="field">
-  <label for="planUnitName">Nama Lembaga / Komisi</label>
-  <select id="planUnitName"></select>
- </div>
-</div>
+<div class="curunit" id="curUnitB"></div>
 
 <div style="overflow-x:auto;margin-bottom:12px">
  <table class="prog plan">
@@ -214,7 +215,12 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
 <div class="field">
  <label for="planFile">Upload Dokumen Word (opsional)</label>
  <input type="file" id="planFile" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
- <p class="hint">Format yang diterima: .doc atau .docx</p>
+ <p class="hint" id="fileInfo">Format yang diterima: .doc atau .docx (maksimal 15 MB)</p>
+</div>
+
+<div class="upload-box" id="uploadWrap" hidden>
+ <div class="progress-bar-bg"><div id="uploadFill" class="progress-bar-fill"></div></div>
+ <div id="uploadText" class="hint" style="margin-top:6px"></div>
 </div>
 
 <div class="btn-flex">
@@ -256,11 +262,10 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
  </div>
 </div>
 
-<!-- FIREBASE SDK + DOCX -->
+<!-- FIREBASE SDK (library docx dimuat belakangan, otomatis) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
-<script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
 
 <script>
 // KONFIGURASI FIREBASE
@@ -276,6 +281,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
+// Gagal cepat (20 detik) kalau Storage belum aktif / koneksi bermasalah, bukan menggantung 10 menit
+storage.setMaxUploadRetryTime(20000);
+storage.setMaxOperationRetryTime(20000);
 
 // DATA PENGURUS
 const unitData = {
@@ -672,11 +680,57 @@ const planData = {
  "LPBKI – Lembaga Pentashih Buku dan Konten Keislaman": [{ "id": 34, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }]
 };
 const PLAN_FIELDS=["work","goal","participants","timePlace","cost","partner","responsible"];
+const MAX_UPLOAD=15*1024*1024;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const keyOf=n=>n.replace(/[\/\s]+/g,'_');
-function unit(){ return $("unitType").value; }
+function unit(){ return sel.type; }
+
+/* ================= PILIHAN UNIT (SATU UNTUK SEMUA BAGIAN) ================= */
+const sel={type:"Lembaga",name:null};
+
+function loadSel(){
+ try{
+  const s=JSON.parse(localStorage.getItem("pramu_sel")||"null");
+  if(s && unitData[s.type] && unitData[s.type][s.name]){ sel.type=s.type; sel.name=s.name; }
+ }catch(e){}
+}
+function saveSel(){
+ try{ localStorage.setItem("pramu_sel",JSON.stringify({type:sel.type,name:sel.name})); }catch(e){}
+}
+
+function syncSelectors(rebuild){
+ const nameEl=$("unitName");
+ $("unitType").value=sel.type;
+ if(rebuild || nameEl.options.length===0){
+  nameEl.innerHTML="";
+  Object.keys(unitData[sel.type]).forEach(name=>{
+   const o=document.createElement("option");
+   o.value=name; o.textContent=name;
+   nameEl.append(o);
+  });
+ }
+ nameEl.value=sel.name;
+
+ const label=sel.type+": "+sel.name;
+ $("curUnitA").textContent="📌 "+label;
+ $("curUnitB").textContent="📌 "+label;
+
+ saveSel();
+ renderPrograms();
+ renderPlanTable();
+}
+
+function onTypeChange(v){
+ sel.type=v;
+ sel.name=Object.keys(unitData[v])[0];
+ syncSelectors(true);
+}
+function onNameChange(v){
+ sel.name=v;
+ syncSelectors(false);
+}
 
 /* ================= FIREBASE SYNC ================= */
 function setFb(text,ok){
@@ -733,7 +787,7 @@ function listenFirestore(){
    if(ch.type==='removed') return;
    const d=ch.doc.data();
    if(d.unit && Array.isArray(d.rows) && JSON.stringify(planData[d.unit])!==JSON.stringify(d.rows)){
-    if(typing && d.unit===$("planUnitName").value) return; // jangan ganggu yang lagi ngetik
+    if(typing && d.unit===sel.name) return; // jangan ganggu yang lagi ngetik
     planData[d.unit]=d.rows; changed=true;
    }
   });
@@ -749,17 +803,6 @@ function listenFirestore(){
 }
 
 /* ================= PROGRAM UMUM ================= */
-function fillUnits(){
- const names=Object.keys(unitData[unit()]);
- $("unitName").innerHTML="";
- names.forEach(n=>{
-  let o=document.createElement("option");
-  o.value=n; o.textContent=n;
-  $("unitName").append(o);
- });
- renderPrograms();
-}
-
 function fillRows(body,type,name,withActions){
  const canEdit=type==="Lembaga";
  const list=programs[name]||[];
@@ -838,7 +881,7 @@ function renderPrograms(){
  ? "Mode Lembaga: program dapat ditambah, diedit, dan dihapus. Tahun pelaksanaan dapat diisi dengan mencentang kolom tahun."
  : "Mode Komisi: program umum dan tahun pelaksanaan hanya dapat dilihat, tidak dapat ditambah, diedit, atau dihapus.";
  $("addBox").style.display=canEdit?"block":"none";
- fillRows($("programBody"),unit(),$("unitName").value,true);
+ fillRows($("programBody"),unit(),sel.name,true);
 }
 
 function renderAllTables(){ renderPrograms(); }
@@ -847,7 +890,7 @@ function addProgram(){
  if(unit()!=="Lembaga") return alert("Komisi tidak memiliki akses edit.");
  const name=$("newName").value.trim();
  if(!name) return alert("Isi nama program terlebih dahulu.");
- const key=$("unitName").value;
+ const key=sel.name;
  if(!programs[key]) programs[key]=[];
  programs[key].push({ id:Date.now(), name, years:[false,false,false,false,false] });
  $("newName").value="";
@@ -857,7 +900,7 @@ function addProgram(){
 
 function editProgram(id){
  if(unit()!=="Lembaga")return;
- const key=$("unitName").value;
+ const key=sel.name;
  const p=(programs[key]||[]).find(x=>x.id===id);
  if(!p)return;
  const name=prompt("Ubah nama program:",p.name);
@@ -870,7 +913,7 @@ function editProgram(id){
 
 function deleteProgram(id){
  if(unit()!=="Lembaga")return;
- const key=$("unitName").value;
+ const key=sel.name;
  const p=(programs[key]||[]).find(x=>x.id===id);
  if(!p)return;
  if(confirm('Hapus program "'+p.name+'"?')){
@@ -884,7 +927,7 @@ function deleteProgram(id){
 function queuePlanSave(key){ debounce('plan_'+key,()=>savePlanRowsFS(key).catch(()=>{}),800); }
 
 function renderPlanTable(){
- const key=$("planUnitName").value;
+ const key=sel.name;
  if(!planData[key]) planData[key]=[];
  const rows=planData[key];
  const body=$("planTableBody");
@@ -944,7 +987,7 @@ function renderPlanTable(){
 }
 
 function updateProgressStats(){
- const key=$("planUnitName").value;
+ const key=sel.name;
  const rows=planData[key]||[];
  if(!rows.length){
   $("progFill").style.width="0%";
@@ -964,7 +1007,7 @@ function updateProgressStats(){
 }
 
 function addPlanRow(){
- const key=$("planUnitName").value;
+ const key=sel.name;
  if(!planData[key]) planData[key]=[];
  planData[key].push({
   id:Date.now(),general:"",fixed:false,
@@ -974,49 +1017,82 @@ function addPlanRow(){
  queuePlanSave(key);
 }
 
-function fillPlanUnits(){
- const type=$("planUnitType").value;
- const sel=$("planUnitName");
- sel.innerHTML="";
- Object.keys(unitData[type]).forEach(name=>{
-  const option=document.createElement("option");
-  option.value=name; option.textContent=name;
-  sel.append(option);
- });
- renderPlanTable();
+/* ================= UPLOAD DOKUMEN (CEPAT + PROGRESS) ================= */
+function setUpload(show,pct,text){
+ $("uploadWrap").hidden=!show;
+ $("uploadFill").style.width=(pct||0)+"%";
+ $("uploadText").textContent=text||"";
+}
+const fmtSize=b=>b>1048576?(b/1048576).toFixed(1)+" MB":Math.max(1,Math.round(b/1024))+" KB";
+const errMsg=r=>(r&&r.reason&&(r.reason.code||r.reason.message))||"unknown";
+
+async function uploadDoc(file,unitName){
+ const path='dokumen/'+keyOf(unitName)+'/'+Date.now()+'_'+file.name.replace(/[^\w.\-]+/g,'_');
+ const ref=storage.ref(path);
+ setUpload(true,0,"Menyiapkan unggahan "+file.name+" …");
+ const stall=setTimeout(()=>setUpload(true,0,"Masih menyambung ke Firebase Storage… kalau lama, cek Storage sudah diaktifkan dan Rules-nya sudah diset."),12000);
+ try{
+  await new Promise((resolve,reject)=>{
+   const task=ref.put(file,{contentType:file.type||'application/octet-stream'});
+   task.on('state_changed',s=>{
+    if(s.bytesTransferred>0) clearTimeout(stall);
+    const pct=s.totalBytes?Math.round(s.bytesTransferred/s.totalBytes*100):0;
+    setUpload(true,pct,"Mengunggah "+file.name+" … "+pct+"%");
+   },reject,resolve);
+  });
+  const url=await ref.getDownloadURL();
+  await db.collection('documents').add({
+   unitType:sel.type,
+   unit:unitName,
+   fileName:file.name,
+   fileUrl:url,
+   storagePath:path,
+   createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+ }finally{
+  clearTimeout(stall);
+ }
 }
 
 async function savePlan(){
+ const file=$("planFile").files[0];
+ const unitName=sel.name;
+
+ if(file){
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(ext!=="doc" && ext!=="docx") return alert("File harus berformat .doc atau .docx");
+  if(file.size>MAX_UPLOAD) return alert("Ukuran file "+fmtSize(file.size)+" terlalu besar. Maksimal 15 MB.");
+ }
+
  const btn=$("savePlan");
  btn.disabled=true;
  const oldText=btn.textContent;
  btn.textContent="Menyimpan…";
- try{
-  const unitName=$("planUnitName").value;
-  clearTimeout(timers['plan_'+unitName]);
-  await savePlanRowsFS(unitName);
 
-  const file=$("planFile").files[0];
+ try{
+  clearTimeout(timers['plan_'+unitName]);
+  // tabel & file diproses bersamaan, tidak antri
+  const tasks=[savePlanRowsFS(unitName)];
+  if(file) tasks.push(uploadDoc(file,unitName));
+  const res=await Promise.allSettled(tasks);
+
+  let msg=res[0].status==="fulfilled"
+   ? "✅ Rencana Program Kerja 2027 tersimpan ke Firebase."
+   : "⚠️ Tabel gagal tersimpan ("+errMsg(res[0])+"). Cek Rules Firestore.";
+
   if(file){
-   const path='dokumen/'+keyOf(unitName)+'/'+Date.now()+'_'+file.name.replace(/[^\w.\-]+/g,'_');
-   const ref=storage.ref(path);
-   await ref.put(file);
-   const url=await ref.getDownloadURL();
-   await db.collection('documents').add({
-    unitType:$("planUnitType").value,
-    unit:unitName,
-    fileName:file.name,
-    fileUrl:url,
-    storagePath:path,
-    createdAt:firebase.firestore.FieldValue.serverTimestamp()
-   });
-   $("planFile").value="";
+   if(res[1].status==="fulfilled"){
+    msg+="\n✅ Dokumen "+file.name+" terunggah.";
+    $("planFile").value="";
+    $("fileInfo").textContent="Format yang diterima: .doc atau .docx (maksimal 15 MB)";
+   }else{
+    console.error(res[1].reason);
+    msg+="\n⚠️ Dokumen gagal diunggah ("+errMsg(res[1])+").\nPastikan Firebase Storage sudah diaktifkan dan Rules-nya allow read, write.";
+   }
   }
-  alert("Rencana Program Kerja 2027 berhasil disimpan ke Firebase.");
- }catch(e){
-  console.error(e);
-  alert("Gagal menyimpan: "+(e.code||e.message)+"\nCek Rules Firestore/Storage di Firebase Console.");
+  alert(msg);
  }finally{
+  setUpload(false);
   btn.disabled=false;
   btn.textContent=oldText;
  }
@@ -1080,6 +1156,26 @@ function triggerDownload(blob,filename){
  setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
 
+// Library docx dimuat di belakang layar supaya halaman tidak tertahan CDN yang lambat
+let docxPromise=null;
+function loadScript(src){
+ return new Promise((res,rej)=>{
+  const s=document.createElement('script');
+  s.src=src; s.onload=res; s.onerror=()=>rej(new Error('gagal muat '+src));
+  document.head.appendChild(s);
+ });
+}
+function ensureDocx(){
+ if(typeof docx!=='undefined') return Promise.resolve(true);
+ if(!docxPromise){
+  docxPromise=loadScript('https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js')
+   .catch(()=>loadScript('https://unpkg.com/docx@8.5.0/build/index.js'))
+   .then(()=>typeof docx!=='undefined')
+   .catch(()=>{docxPromise=null;return false;});
+ }
+ return docxPromise;
+}
+
 // Fallback kalau library docx gagal dimuat: HTML Word dengan ekstensi .doc (bukan .docx)
 function fallbackDoc(title,headers,rows,filename){
  let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><style>@page{size:A4 landscape;margin:2cm}body{font-family:Calibri,Arial;font-size:10pt}h1{text-align:center;color:#23866b;font-size:14pt}table{border-collapse:collapse;width:100%}th,td{border:1px solid #23866b;padding:5pt;vertical-align:top}th{background:#e4f5ed}</style></head><body>';
@@ -1089,8 +1185,9 @@ function fallbackDoc(title,headers,rows,filename){
  triggerDownload(new Blob(['\ufeff'+h],{type:'application/msword'}),filename.replace(/\.docx$/i,'.doc'));
 }
 
-function buildDocx({title,headers,rows,fracs,landscape,centerCols,filename}){
- if(typeof docx==='undefined'){
+async function buildDocx({title,headers,rows,fracs,landscape,centerCols,filename}){
+ const ok=await ensureDocx();
+ if(!ok){
   alert("Library .docx gagal dimuat (cek internet). Diunduh sebagai .doc.");
   return fallbackDoc(title,headers,rows,filename);
  }
@@ -1137,14 +1234,19 @@ function buildDocx({title,headers,rows,fracs,landscape,centerCols,filename}){
   }]
  });
 
- D.Packer.toBlob(doc).then(blob=>triggerDownload(blob,filename))
-  .catch(e=>{console.error(e);alert("Gagal membuat file Word: "+e.message);});
+ try{
+  const blob=await D.Packer.toBlob(doc);
+  triggerDownload(blob,filename);
+ }catch(e){
+  console.error(e);
+  alert("Gagal membuat file Word: "+e.message);
+ }
 }
 
 const safeName=s=>s.replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'');
 
 function exportProgramUmumDocx(){
- const uName=$("unitName").value;
+ const uName=sel.name;
  const list=programs[uName]||[];
  const rows=list.length
   ? list.map((p,i)=>[i+1,p.name,...p.years.map(y=>y?"✓":"")])
@@ -1161,7 +1263,7 @@ function exportProgramUmumDocx(){
 }
 
 function exportPlanDocx(){
- const uName=$("planUnitName").value;
+ const uName=sel.name;
  const list=planData[uName]||[];
  const rows=list.length
   ? list.map((r,i)=>[i+1,r.general||"-",r.work||"-",r.goal||"-",r.participants||"-",r.timePlace||"-",r.cost||"-",r.partner||"-",r.responsible||"-"])
@@ -1179,7 +1281,7 @@ function exportPlanDocx(){
 
 /* ================= MODE PRESENTASI ================= */
 function openPresentationModal(){
- const pUName=$("planUnitName").value;
+ const pUName=sel.name;
  const rows=planData[pUName]||[];
 
  $("presentationModal").style.display="flex";
@@ -1238,19 +1340,26 @@ function presentSingleDoc(p){
 function closePresentationModal(){ $("presentationModal").style.display="none"; }
 
 /* ================= EVENT LISTENERS ================= */
-$("planUnitType").addEventListener("change",fillPlanUnits);
-$("planUnitName").addEventListener("change",renderPlanTable);
+$("unitType").addEventListener("change",e=>onTypeChange(e.target.value));
+$("unitName").addEventListener("change",e=>onNameChange(e.target.value));
 $("savePlan").addEventListener("click",savePlan);
 $("addPlanRow").addEventListener("click",addPlanRow);
-$("unitType").addEventListener("change",fillUnits);
-$("unitName").addEventListener("change",renderPrograms);
 $("add").addEventListener("click",addProgram);
+$("planFile").addEventListener("change",()=>{
+ const f=$("planFile").files[0];
+ $("fileInfo").textContent=f
+  ? "Dipilih: "+f.name+" ("+fmtSize(f.size)+")"+(f.size>MAX_UPLOAD?" ⚠️ terlalu besar, maksimal 15 MB":"")
+  : "Format yang diterima: .doc atau .docx (maksimal 15 MB)";
+});
 
 /* ================= INISIALISASI ================= */
-fillUnits();
-fillPlanUnits();
+loadSel();
+if(!sel.name) sel.name=Object.keys(unitData[sel.type])[0];
+syncSelectors(true);
 renderPlans();
 listenFirestore();
+// siapkan library docx di belakang layar setelah halaman selesai dimuat
+window.addEventListener("load",()=>setTimeout(ensureDocx,800));
 </script>
 </body>
 </html>
