@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRAMUKERDA II 2026 – MUI Kota Tangerang</title>
+<style>
+:root{--g:#23866b;--bg:#f3f7f5;--ink:#24332e;--muted:#718078;--line:#e3ebe6}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;padding:26px 15px;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}
+.app{max-width:980px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:20px}
+h1{margin:0 0 6px;color:var(--g);font-size:25px;line-height:1.3}
+h2{font-size:19px;margin:0 0 17px}
+.sub,.hint{color:var(--muted);font-size:13px;line-height:1.5}
+.sub{margin:4px 0 0}
+.theme{font-weight:bold;color:var(--ink)}
+.pill,.tag{border-radius:30px;padding:6px 10px;font-size:11px;font-weight:bold;background:#e4f5ed;color:#187653;white-space:nowrap}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:21px;margin-bottom:17px;box-shadow:0 5px 18px #1c49300a}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d9e3dd;border-radius:8px;background:white;color:var(--ink);font-size:14px;font-family:Arial,sans-serif}
+input[type=checkbox]{width:18px;height:18px;padding:0;cursor:pointer;accent-color:var(--g)}
+textarea{resize:vertical}
+button{border:0;border-radius:8px;padding:10px 13px;font-weight:bold;cursor:pointer}
+.primary{background:var(--g);color:white}
+.secondary{background:#edf3ef;color:#315447}
+.danger{background:#fff0ef;color:#b33b35}
+.word-btn{background:#2b579a;color:white}
+.full{width:100%;padding:13px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.status{font-size:11px;font-weight:bold;border-radius:20px;padding:6px 9px;white-space:nowrap}
+.editable{background:#e4f5ed;color:#187653}
+.locked{background:#f0f1f1;color:#68736d}
+.note{background:#f4f7f5;padding:11px;border-radius:8px;color:#59675f;font-size:12px;line-height:1.5;margin:4px 0 14px}
+.actions{display:flex;gap:6px}
+.actions button{font-size:11px;padding:8px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-size:10px;text-transform:uppercase}
+.prog th,.prog td{vertical-align:middle}
+.prog .c{text-align:center}
+.prog .name{min-width:240px;line-height:1.5;font-size:13px}
+.prog .yr{width:52px}
+.plan td{vertical-align:top}
+.plan textarea{min-width:150px;font-size:12px;padding:8px;line-height:1.4}
+.plan .name{min-width:220px}
+.prog .y27{background:#f1faf6}
+.prog .tick{color:var(--g);font-weight:bold;font-size:15px}
+.prog thead tr:first-child th{border-bottom:1px solid var(--line)}
+.empty{text-align:center;color:var(--muted);padding:18px}
+.muted{color:var(--muted);font-size:12px}
+
+/* PRESENTATION MODE & PROGRESS STYLES */
+.progress-bar-bg{background:#e0e8e4;border-radius:10px;height:12px;width:100%;overflow:hidden;margin-top:6px}
+.progress-bar-fill{background:var(--g);height:100%;width:0%;transition:width 0.4s ease}
+.presentation-card{background:#1e292b;color:white;padding:25px;border-radius:14px;margin-bottom:20px}
+.presentation-card h3{color:#5cdbb5;margin-top:0}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:999;padding:15px}
+.modal-content{background:white;color:var(--ink);width:100%;max-width:850px;max-height:90vh;overflow-y:auto;border-radius:12px;padding:25px;position:relative}
+.close-modal{position:absolute;top:15px;right:15px;background:#e0e0e0;border:0;border-radius:50%;width:32px;height:32px;cursor:pointer;font-weight:bold}
+.btn-flex{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn-flex button{flex:1;min-width:160px}
+
+@media(max-width:620px){
+ body{padding:16px 9px}
+ .card{padding:15px}
+ .grid{grid-template-columns:1fr;gap:0}
+ header{align-items:flex-start}
+ h1{font-size:21px}
+ .btn-flex{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+ <div>
+  <h1>PRAMUKERDA II 2026<br>MUI KOTA TANGERANG</h1>
+  <p class="sub"><em>Masa Khidmat 2025 – 2030</em></p>
+  <p class="sub theme">Tema: Revitalisasi Khidmah MUI Melalui Dakwah bil Hal Terhadap Problematika Masyarakat Kota Tangerang.</p>
+  <p class="sub"><em>Kota Tangerang, 11 November 2026</em></p>
+ </div>
+ <span class="pill" id="fbStatus">⏳ Menghubungkan…</span>
+</header>
+
+<!-- DASHBOARD PRESENTASI & PERSENTASE -->
+<section class="card presentation-card">
+ <h3>📊 Dashboard Presentasi & Stat Kesiapan Program</h3>
+ <p class="sub" style="color:#a3c2b8">Lihat ringkasan presentasi capaian pengisian rencana program dari setiap Komisi dan Lembaga.</p>
+
+ <div class="grid" style="margin-top:15px">
+  <div>
+   <label style="color:#5cdbb5">Persentase Kelengkapan Program Kerja 2027</label>
+   <div class="progress-bar-bg">
+    <div id="progFill" class="progress-bar-fill"></div>
+   </div>
+   <div id="progText" style="font-size:12px;margin-top:5px;color:#cbe0d8">0% Terisi</div>
+  </div>
+  <div style="display:flex;align-items:flex-end">
+   <button class="primary full" onclick="openPresentationModal()" style="background:#23866b;color:white">📺 Buka Mode Presentasi Rapat</button>
+  </div>
+ </div>
+</section>
+
+<!-- PROGRAM UMUM -->
+<section class="card">
+<div class="sectionhead">
+ <div>
+  <h2 style="margin:0 0 5px">Program Umum 2026 - 2030</h2>
+  <div class="muted">Pilih Lembaga atau Komisi untuk melihat program umum dan tahun pelaksanaannya.</div>
+ </div>
+ <span id="permission" class="status editable">Bisa diedit</span>
+</div>
+
+<div class="grid">
+  <div class="field">
+    <label for="unitType">Jenis Unit</label>
+    <select id="unitType">
+      <option value="Lembaga">Lembaga</option>
+      <option value="Komisi">Komisi</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="unitName">Nama Lembaga / Komisi</label>
+    <select id="unitName"></select>
+  </div>
+</div>
+
+<div id="permissionNote" class="note"></div>
+
+<div id="addBox">
+ <div class="field">
+  <label for="newName">Tambah Program Umum Baru</label>
+  <input id="newName" placeholder="Masukkan nama program umum">
+ </div>
+ <button class="primary" id="add">+ Tambah Program</button>
+</div>
+
+<div style="overflow-x:auto">
+ <table class="prog">
+  <thead>
+   <tr>
+    <th rowspan="2">No</th>
+    <th rowspan="2">Program Umum</th>
+    <th class="c" colspan="5">Tahun Pelaksanaan</th>
+    <th rowspan="2">Aksi</th>
+   </tr>
+   <tr>
+    <th class="c yr">2026</th><th class="c yr y27">2027</th><th class="c yr">2028</th><th class="c yr">2029</th><th class="c yr">2030</th>
+   </tr>
+  </thead>
+  <tbody id="programBody"></tbody>
+ </table>
+</div>
+
+<div style="margin-top:14px">
+ <button class="word-btn" onclick="exportProgramUmumDocx()">📥 Unduh Program Umum (.docx)</button>
+</div>
+</section>
+
+<!-- RENCANA PROGRAM KERJA 2027 -->
+<section class="card">
+<h2>Rencana Program Kerja 2027</h2>
+
+<p class="hint">
+ Pilih Lembaga atau Komisi, lalu isi tabel rencana program kerja 2027 (program kerja, tujuan, peserta, waktu &amp; tempat, biaya, mitra kerja, dan penanggung jawab).
+ Kolom Program Umum untuk Komisi sudah terisi sesuai dokumen, baris baru bisa ditambahkan bila diperlukan.
+</p>
+
+<div class="grid">
+ <div class="field">
+  <label for="planUnitType">Jenis Unit</label>
+  <select id="planUnitType">
+   <option>Lembaga</option>
+   <option>Komisi</option>
+  </select>
+ </div>
+
+ <div class="field">
+  <label for="planUnitName">Nama Lembaga / Komisi</label>
+  <select id="planUnitName"></select>
+ </div>
+</div>
+
+<div style="overflow-x:auto;margin-bottom:12px">
+ <table class="prog plan">
+  <thead>
+   <tr>
+    <th>No</th>
+    <th>Program Umum</th>
+    <th>Program Kerja 2027</th>
+    <th>Tujuan Program</th>
+    <th>Peserta</th>
+    <th>Waktu &amp; Tempat</th>
+    <th>Biaya</th>
+    <th>Mitra Kerja</th>
+    <th>Penanggung Jawab</th>
+    <th>Aksi</th>
+   </tr>
+  </thead>
+  <tbody id="planTableBody"></tbody>
+ </table>
+</div>
+
+<div class="btn-flex" style="margin-bottom:18px">
+ <button class="secondary" id="addPlanRow">+ Tambah Baris</button>
+</div>
+
+<div class="field">
+ <label for="planFile">Upload Dokumen Word (opsional)</label>
+ <input type="file" id="planFile" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+ <p class="hint">Format yang diterima: .doc atau .docx</p>
+</div>
+
+<div class="btn-flex">
+ <button class="primary" id="savePlan">Simpan Rencana Program</button>
+ <button class="word-btn" onclick="exportPlanDocx()">📥 Unduh Rencana Program 2027 (.docx)</button>
+</div>
+
+<p class="hint" style="margin-top:12px">
+ Isi tabel tersimpan otomatis ke Firebase dan tersinkron antar pengguna. Dokumen yang diunggah disimpan di Firebase Storage.
+</p>
+</section>
+
+<!-- DAFTAR DOKUMEN & PRESENTASI -->
+<section class="card">
+<h2>Dokumen & Presentasi Terunggah</h2>
+<div style="overflow-x:auto">
+ <table>
+  <thead>
+   <tr>
+    <th>Unit</th>
+    <th>Nama File Upload</th>
+    <th>Aksi & Presentasi</th>
+   </tr>
+  </thead>
+  <tbody id="planHistory"></tbody>
+ </table>
+</div>
+</section>
+
+</div>
+
+<!-- MODAL PRESENTASI -->
+<div id="presentationModal" class="modal-overlay">
+ <div class="modal-content">
+  <button class="close-modal" onclick="closePresentationModal()">✕</button>
+  <h2 style="color:var(--g)" id="presTitle">Mode Presentasi PRAMUKERDA II</h2>
+  <hr style="border:0;border-top:1px solid #ddd;margin:15px 0">
+  <div id="presBody"></div>
+ </div>
+</div>
+
+<!-- FIREBASE SDK + DOCX -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
+
+<script>
+// KONFIGURASI FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSyDrJYl5thpitYm7rijw_cv4xmYjylOSpSU",
+  authDomain: "mui-pramukerda.firebaseapp.com",
+  projectId: "mui-pramukerda",
+  storageBucket: "mui-pramukerda.firebasestorage.app",
+  messagingSenderId: "1020591731074",
+  appId: "1:1020591731074:web:1364b1a6ed6b85281b9f9b"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+// DATA PENGURUS
+const unitData = {
+ Lembaga: {
+  "SIAR – Lembaga Sistim Informasi dan Aplikasi Terintegrasi": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Direktur","Daniel Ramli Lumowa, SE"],
+   ["Wakil Direktur","Ika Lestari Sachrudin, SE"],
+   ["GM","Lely Syafawi, SE., MM"],
+   ["Wakil GM","H. Mohammad Adib Nashirul Millah, SH"],
+   ["Keuangan","Hj. Mutia Rasyid"],
+   ["Perencanaan & Pengembangan","Irvan Burhanudin, ST"],
+   ["Perencanaan & Pengembangan","M. Ghaddafi Al Hasyim, S.Kom"],
+   ["Divisi Menejemen & Teknologi","Fauzi Sehati, S.Kom"],
+   ["Divisi Media & Representatif","Dr. Nursanda Rizki Adhari, S.Pd., M.Pd"],
+   ["Divisi Marketing & Kerjasama","Ahmad Syaikhu, SH., MH"]
+  ],
+  "LP2KU – Lembaga Pendidikan dan Pelatihan Kader Ulama": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","Dr. H. Mohammad Soleh Hapudin, M.Pd"],
+   ["Sekretaris","Dr. H. Anwar Sani, MA"],
+   ["Bendahara","Dr. H. Ahmad Sanwani, SE"],
+   ["Anggota","Dr. H. Evan Hamzah Muchtar, M.E.Sy."],
+   ["Anggota","H. M. Rafli Farid Al Farisi, LC"],
+   ["Anggota","H. Muflih Adi Leksono, LC., MA"]
+  ],
+  "LPBKI – Lembaga Pentashih Buku dan Konten Keislaman": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","H. Ahmad Rofiki, S.Pd.I"],
+   ["Sekretaris","Arfan Effendi, S.Ag"],
+   ["Anggota","H. Ahmad Nurhasan, S.Ag"],
+   ["Anggota","Ikhwan Sukirman"],
+   ["Anggota","Achi TM"]
+  ],
+  "Lembaga Mualaf Center": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","M. Imron Farhani El’arofah"],
+   ["Sekretaris","H. Wiyono, SE.Sy"],
+   ["Anggota","Drs. KH. Hambali Isman"],
+   ["Anggota","Drs. Iis Bahermansyah, M.M., M.Pd."],
+   ["Anggota","Ahmad Baijuri, S.Pd."]
+  ],
+  "GANAS ANNAR – Gerakan Nasional Anti Narkoba": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","H. Fahrurroji"],
+   ["Sekretaris","Ahmad Syailendra, S.Sos."],
+   ["Anggota","Tono Darussalam"],
+   ["Anggota","Muhammad Zaky Romly"],
+   ["Anggota","Dian Oktavia"]
+  ],
+  "LP3H – Lembaga Pendampingan Proses Produk Halal": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","H. Muhamaad Farhan Masduki"],
+   ["Sekretaris","Dewi Lestari, M.Pdi"],
+   ["Anggota","Dewi Darmawati Djaelani"],
+   ["Anggota","H.Taufik Djunaidi"],
+   ["Anggota","Ifta Baladina, S.Pd"]
+  ],
+  "LBH – Lembaga Bantuan Hukum": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","H. Doddy Effendy, S.H., M.H."],
+   ["Sekretaris","Noni Menawati, S.H."],
+   ["Anggota","Dr. Hj. Hasnah Azis S.Pd, M.Pd. SH. M.H."],
+   ["Anggota","Dede Maulana Faisal, S.H. M.H."],
+   ["Anggota","Mila Azizah, S.H. M.H."]
+  ],
+  "Lembaga Kesehatan": [
+   ["Pembina","KH. Ahmad Baijuri Khotib, MA"],
+   ["Ketua","Ida Nurhandayani, Ch.CHt"],
+   ["Sekretaris","Rini Sunarti"],
+   ["Anggota","Hj. Sarti Handayani"],
+   ["Anggota","H. Ruslan Abdul Ghani"],
+   ["Anggota","Bahruddin, S.Sos."]
+  ]
+ },
+ Komisi: {
+  "Komisi Fatwa": [
+   ["Ketua","Dr. KH. Nasirudin Kholid, M.Ag"],
+   ["Sekretaris","KH. Hasanuddin"],
+   ["Anggota","KH. Kosasih Fathoni"],
+   ["Anggota","KH. Burhanuddin"],
+   ["Anggota","KH. Fathurrahman Yusuf"],
+   ["Anggota","KH. Ahmad Jamil, Ph.D."],
+   ["Anggota","Dr. H. Ruslan Husein Marasabessy, M.A."],
+   ["Anggota","H. Tarekh Era Raisy, Lc., M.A."]
+  ],
+  "Komisi Ukhuwah Islamiyah": [
+   ["Ketua","Hj. Titi Suniti, S.Ag"],
+   ["Sekretaris","Khairul Supian, S.Ag"],
+   ["Anggota","Drs. H. Bahtera Yudha, M.M."],
+   ["Anggota","KH. Abdul Mubin"],
+   ["Anggota","Drs. H. Muthori"]
+  ],
+  "Komisi Dakwah": [
+   ["Ketua","Drs. KH. Imam Syahroni"],
+   ["Sekretaris","Hj. Risyanti Yusuf"],
+   ["Anggota","KH. Mahmudin Abdullah"],
+   ["Anggota","KH. Saeful Bahri"],
+   ["Anggota","Dra. Hj. Sri Latifah Romli"]
+  ],
+  "Komisi Pendidikan dan Kaderisasi": [
+   ["Ketua","H. Ahmad Syauqi"],
+   ["Sekretaris","H. Ahmad Zamzami"],
+   ["Anggota","H. Jamaludin, Lc., M.A."],
+   ["Anggota","Yuliasih Hanafi, M.Pd"],
+   ["Anggota","H. Mulyadi LM., S.PdI., SH., M.Si"]
+  ],
+  "Komisi Pengkajian, Penelitian dan Pengembangan": [
+   ["Ketua","Drs. Danni Budianto Saragih. MCL"],
+   ["Sekretaris","Fadlullah Yusuf, S.Ag., M.A. Hum"],
+   ["Anggota","Ellysa Kusuma Laksanawati, ST, MT, IPM, AE"],
+   ["Anggota","Dr. Fauzi Al-Mubarok, M.Ag"],
+   ["Anggota","H. Yulman Firmansyah, M.Pd"]
+  ],
+  "Komisi Hukum dan HAM": [
+   ["Ketua","Sumardi, SH., M.H."],
+   ["Sekretaris","Wahyul Furqon, SH., M.H."],
+   ["Anggota","H. Undang Herman Maksudi, SH., M.H."],
+   ["Anggota","KH. Ahmad Maliki"],
+   ["Anggota","Reza Pahlevi, M.A."]
+  ],
+  "Komisi Pemberdayaan Ekonomi Umat": [
+   ["Ketua","H. Subur Amin Mubarok, S.Pd.I"],
+   ["Sekretaris","Dra. Hj. Umroh, M.M."],
+   ["Anggota","Drs. KH. Anwar Musaddad, M.A."],
+   ["Anggota","H. Damanhuri Bakri, S.Ag"],
+   ["Anggota","H. Ubaidah Al Ansory, S.E., S.Pd"]
+  ],
+  "Komisi Perempuan, Remaja dan Keluarga": [
+   ["Ketua","Dra. Hj. Yusra Aisyah"],
+   ["Sekretaris","Hj. Siti Saidah, S.Ag"],
+   ["Anggota","Hj. Siti Masyitoh"],
+   ["Anggota","Hj. Tati Asnawati"],
+   ["Anggota","Hj. Shintawati"],
+   ["Anggota","Dra. Hj. Herlina Sanusi"],
+   ["Anggota","Dra. Hj. Rositi, M.Pd"]
+  ],
+  "Komisi Informasi dan Komunikasi": [
+   ["Ketua","Syarif Hidayatullah, S.H.I, C.L.Q"],
+   ["Sekretaris","Ahmad Sudarto, M.Pd"],
+   ["Anggota","H. Buchori, S.Pd"],
+   ["Anggota","Abdul Wadud, SE., M.M."],
+   ["Anggota","Sopandi Sanusi, S.T."]
+  ],
+  "Komisi Hubungan Antar Umat Beragama": [
+   ["Ketua","H. Saeful Bahri Yakub, S.Ag"],
+   ["Sekretaris","H. Faik Fachroni, SE"],
+   ["Anggota","Drs. H. Moch. Dikdik Suherdina"],
+   ["Anggota","Hasan Argobie, S.E., M.M."],
+   ["Anggota","Hj. Mulyati, S.Ag"]
+  ],
+  "Komisi Pembinaan Seni Budaya Islam": [
+   ["Ketua","H. Malkan Almasqo, S.Ip., M.Ap"],
+   ["Sekretaris","H. Zuhri Rahmatullah, S.Ag"],
+   ["Anggota","H. Darussalam, S.I.P"],
+   ["Anggota","H. Aspura"],
+   ["Anggota","Hj. Siti Latifah"]
+  ]
+ }
+};
+
+const YEARS=[2026,2027,2028,2029,2030];
+const programs = {
+ "Komisi Fatwa": [
+  { "id": 1, "name": "Mengembangkan kegiatan ilmu syari’ah di kalangan ulama mengenai berbagai masalah umat Islam sesuai dengan tingkatan kebutuhan dalam memberikan bimbingan dan pedoman hukum bagi umat Islam.", "years": [true,true,true,true,true] },
+  { "id": 2, "name": "Memasyarakatkan hasil kajian-kajian ulama Islam dan memberikan masukan kepada instansi pemerintah, lembaga swasta atau perorangan yang membutuhkan.", "years": [false,false,true,true,false] },
+  { "id": 3, "name": "Membahas, merumuskan dan menetapkan fatwa terkait dengan masalah keagamaan kontemporer.", "years": [false,true,false,false,true] },
+  { "id": 4, "name": "Sosialisasi hasil fatwa MUI melalui media cetak dan elektronik.", "years": [false,true,false,false,false] },
+  { "id": 5, "name": "Meningkatkan kedudukan dan peranan komisi fatwa menuju kesatuan fatwa sebagai forum ilmiah di antara ulama dengan menyelenggarakan pertemuan secara berkala dan sistematis.", "years": [false,false,false,true,false] },
+  { "id": 6, "name": "Mengusahakan agar setiap fatwa MUI baik pada tingkat pusat maupun daerah menjadi hukum positif.", "years": [false,false,false,false,true] }
+ ],
+ "Komisi Ukhuwah Islamiyah": [
+  { "id": 7, "name": "Komunikasi dan sinergi antar ormas islam, Perguruan Tinggi Islam (PTI) dan pondok pesantren dalam rangka memperkokoh ukhuwah Islamiyah.", "years": [true,false,false,false,false] },
+  { "id": 8, "name": "Mendorong adanya pusat kegiatan Islam/Islamic Center di Kota Tangerang dan menjadikan Islamic Centre sebagai pusat dakwah, ukhuwah dan tamaddun Islami.", "years": [false,true,false,false,false] },
+  { "id": 9, "name": "Koordinasi program ukhuwah lintas sektoral.", "years": [false,false,true,false,false] }
+ ],
+ "Komisi Dakwah": [
+  { "id": 10, "name": "Melakukan dakwah Islamiyah untuk memperkuat aqidah umat Islam dan membentenginya dari upaya pemurtadan, ajaran komunisme, liberalisme, sekularisme, dan ajaran lain yang bertentangan dengan aqidah dan syariat Islam.", "years": [true,false,true,false,true] },
+  { "id": 11, "name": "Mengembangkan dan meningkatkan pelaksanaan dakwah di daerah-daerah khusus.", "years": [false,true,false,true,false] },
+  { "id": 12, "name": "Memperluas eskalasi kegiatan dakwah Islam Washatiyah.", "years": [false,false,true,false,false] },
+  { "id": 13, "name": "Melakukan pengkajian tentang metode, materi, subjek dan media dakwah sesuai perkembangan zaman.", "years": [false,true,false,true,false] },
+  { "id": 14, "name": "Memelopori dan mengkoordinasikan kegiatan pelatihan/pendidikan kader dakwah bagi kalangan dai milenial.", "years": [false,false,true,false,true] },
+  { "id": 15, "name": "Melakukan peningkatan kompetensi keilmuan keislaman dan kebangsaan bagi para dai/daiyah.", "years": [false,false,false,true,false] },
+  { "id": 16, "name": "Melakukan dakwah pemberdayaan untuk meningkatkan ekonomi dan kesejahteraan masyarakat agar terhindar dari upaya pendangkalan akidah.", "years": [false,true,false,false,false] },
+  { "id": 17, "name": "Melanjutkan dan mewujudkan penyusunan peta dakwah Kota Tangerang.", "years": [false,false,false,false,true] },
+  { "id": 18, "name": "Penulisan Ensiklopedia Ulama Kota Tangerang.", "years": [false,false,false,false,true] }
+ ],
+ "Komisi Pendidikan dan Kaderisasi": [
+  { "id": 19, "name": "Menyelenggarakan program kesarjanaan Pendidikan Kader Ulama MUI.", "years": [true,false,false,false,false] },
+  { "id": 20, "name": "Melaksanakan program diklat pendidikan kader ulama non-gelar.", "years": [false,true,false,false,false] },
+  { "id": 21, "name": "Menggelar pelatihan operasionalisasi teknologi digital dalam kegiatan kependidikan di Kota Tangerang.", "years": [false,false,true,false,false] },
+  { "id": 22, "name": "Menyelenggarakan diskusi kelompok terpumpun terkait evaluasi pendidikan agama Islam di sekolah dan madrasah di Kota Tangerang.", "years": [false,false,true,false,false] },
+  { "id": 23, "name": "Melaksanakan workshop nasional dengan tema besar Membangun Generasi Bangsa Yang Beradab Dan Religius Menuju Indonesia Maju.", "years": [false,false,false,false,true] },
+  { "id": 24, "name": "Menggelar program pesantren Ramadhan bagi remaja lintas ormas Islam di Kota Tangerang.", "years": [true,true,true,true,true] },
+  { "id": 25, "name": "Menyelenggarakan Rakorda Komisi Pendidikan dan Kaderisasi MUI kecamatan se-Kota Tangerang.", "years": [false,false,false,true,false] },
+  { "id": 26, "name": "Mendorong menyelenggarakan Pendidikan Kader Ulama pada Ma'had Aly di pondok pesantren.", "years": [false,false,true,false,false] }
+ ],
+ "Komisi Pemberdayaan Ekonomi Umat": [
+  { "id": 27, "name": "Menyelenggarakan konsolidasi dan koordinasi untuk pengembangan ekonomi umat Islam di Kota Tangerang.", "years": [true,false,false,false,false] },
+  { "id": 28, "name": "Dakwah ekonomi umat untuk membangun pemahaman dan pencerahan terkait ikhtiar kehidupan di bidang ekonomi yang merupakan gerakan ekonomi umat Islam sebagai solusi kemajuan umat dan membangun jaringan, sinergi, persatuan dan kemandirian ekonomi umat.", "years": [false,true,true,false,false] },
+  { "id": 29, "name": "Penyempurnaan buku KUBAZ (Kemandirian Umat Berbasis Zakat, Infaq, Shadaqah, Wakaf dan Ta’awun).", "years": [false,false,false,true,true] }
+ ],
+ "Komisi Hukum dan HAM": [
+  { "id": 30, "name": "Meningkatkan penelitian dan pengkajian hukum mengenai berbagai aspek kehidupan untuk selanjutnya disampaikan kepada lembaga negara/pemerintah dan komponen bangsa/masyarakat sebagai masukan dalam pembentukan atau penyempumaan terhadap peraturan perundang-undangan yang ada serta menjadi pedoman dan tuntutan bagi umat Islam.", "years": [false,false,true,false,false] },
+  { "id": 31, "name": "Mengembangkan kajian-kajian hukum Islam di berbagai bidang kehidupan sebagai masukan dan bahan pembentukan peraturan perundang-undangan yang berkaitan dengan hukum Islam dan pengembangan hukum Islam di tanah air.", "years": [false,true,false,false,false] },
+  { "id": 32, "name": "Mencermati rancangan peraturan perundang-undangan yang akan dibentuk yang berkaitan dengan kepentingan umat Islam dan bangsa di tingkat daerah, serta menyusun pandangan dan sikap MUI mengenai rancangan peraturan perundang-undangan tersebut serta memperjuangkannya untuk masuk ke dalam materi/isi peraturan perundang-undangan yang akan dibentuk tersebut dengan melakukan komunikasi dan tukar pikiran dengan lembaga legislatif dan lembaga eksekutif.", "years": [false,false,true,false,false] },
+  { "id": 33, "name": "Memberikan pembelaan dan perlindungan terhadap peraturan perundang-undangan, termasuk UU, yang sesuai dengan ajaran Islam dan aspirasi umat Islam dan bangsa untuk tetap berlaku apabila UU atau peraturan tersebut dilakukan pengujian konstitusionalitas peraturan (judicial review) di Mahkamah Konstitusi atau di Mahkamah Agung, dan sebaliknya melakukan atau menjadi pihak terkait yang ikut melakukan pengujian konstitusionalitas peraturan (judicial review) untuk membatalkan keberlakuan UU atau peraturan lainnya apabila regulasi tersebut tidak sesuai dengan ajaran Islam, kepentingan umat Islam dan bangsa di Mahkamah Konstitusi atau Mahkamah Agung.", "years": [false,true,false,false,false] },
+  { "id": 34, "name": "Meningkatkan peran dan partisipasi MUI dalam pembentukan peraturan perundang-undangan di daerah agar isi regulasi tersebut memuat nilai-nilai ajaran Islam dan mendukung terwujudnya keadilan, kesejahteraan dan kemajuan umat dan bangsa.", "years": [false,true,false,false,false] },
+  { "id": 35, "name": "Menyelenggarakan penelitian dan pengkajian mengenai hak asasi manusia dan mengembangkan konsep hak asasi manusia dalam perspektif ajaran Islam.", "years": [false,false,false,false,true] },
+  { "id": 36, "name": "Melakukan pemantauan terhadap pelaksanaan dan situasi hak asasi manusia di Kota Tangerang serta menyusun pandangan dan sikap MUI terhadap peristiwa atau situasi yang berkaitan dengan hak asasi manusia.", "years": [false,true,false,false,false] },
+  { "id": 37, "name": "Melakukan berbagai ikhtiar dalam rangka meningkatkan kualitas kebijakan, regulasi dan praktik penerapan hak asasi manusia di Kota Tangerang.", "years": [false,false,true,false,false] },
+  { "id": 38, "name": "Menyelenggarakan berbagai kegiatan mudzakarah, seminar, diskusi dan sejenisnya mengenai berbagai isu-isu hukum dan hak asasi manusia, baik yang berkaitan dengan hukum Islam maupun hukum positif dan menyampaikan hasilnya ke berbagai pihak yang terkait sebagai sumbangsih MUI untuk penyempumaan sistem hukum nasional.", "years": [true,false,false,false,false] },
+  { "id": 39, "name": "Menjalin kerja sama dengan berbagai lembaga hukum dan hak asasi manusia dan lembaga penegak hukum dan hak asasi manusia.", "years": [true,false,false,false,false] },
+  { "id": 40, "name": "Menjalin kerja sama dengan lembaga konsultasi dan bantuan hukum dalam ikhtiar membela dan memperjuangkan hak-hak umat Islam atau lembaga Islam.", "years": [false,true,false,false,false] }
+ ],
+ "Komisi Hubungan Antar Umat Beragama": [
+  { "id": 41, "name": "Meningkatkan kepekaan dan sikap proaktif terhadap masalah-masalah yang terjadi antar umat beragama, khususnya yang menyangkut umat Islam, yang timbul akibat perselisihan dan pertentangan antar pemeluk agama yang dapat mengganggu kerukunan antar umat beragama.", "years": [true,false,false,false,false] },
+  { "id": 42, "name": "Mengupayakan terwujudnya pemahaman yang sama tentang toleransi antar umat di kalangan pemuka/pemimpin pemerintah.", "years": [true,true,false,false,false] },
+  { "id": 43, "name": "Mengikuti perkembangan penyusunan Raperda yang berpotensi menimbulkan pertentangan antar umat beragama dan berupaya memantau pelaksanaannya secara konsisten.", "years": [true,true,false,false,false] },
+  { "id": 44, "name": "Meningkatkan kerja sama dan konsultasi dengan majelis-majelis agama dan pemerintah dalam masalah kerukunan.", "years": [false,false,true,true,false] },
+  { "id": 45, "name": "Melakukan studi yang seksama dan kontinyu tentang kehidupan antar umat beragama, terutama yang berpotensi terjadi dan sedang terjadi konflik.", "years": [false,false,false,false,true] },
+  { "id": 46, "name": "Mendorong optimalisasi peran Forum Kerukunan Antar Umat Beragama (FKUB) Kota Tangerang sebagai wadah kerja sama dan konsultasi antara FKUB dan pemerintah dalam masalah kerukunan.", "years": [true,false,false,false,false] },
+  { "id": 47, "name": "Bekerja sama dengan lembaga keagamaan daerah.", "years": [false,false,false,true,false] }
+ ],
+ "Komisi Perempuan, Remaja dan Keluarga": [
+  { "id": 48, "name": "Memberikan kontribusi pemikiran tentang ajaran Islam mengenai berbagai isu yang berkaitan dengan perempuan, remaja dan keluarga, serta memberikan solusi terhadap permasalahan yang dihadapi.", "years": [false,true,false,false,false] },
+  { "id": 49, "name": "Meningkatkan kerjasama dengan badan/ormas/instansi terkait dalam upaya pemberdayaan perempuan, remaja dan keluarga.", "years": [true,false,false,true,false] },
+  { "id": 50, "name": "Memberikan pelayanan terkait masalah perempuan, remaja dan keluarga.", "years": [false,false,true,false,false] },
+  { "id": 51, "name": "Membuat Program Penguatan Kelembagaan Komisi Perempuan Remaja dan Keluarga (pemetaan /mapping potensi dan penguatan jejaring).", "years": [false,true,false,false,false] },
+  { "id": 52, "name": "Silaturahim Akbar dalam rangka konsolidasi dan koordinasi organisasi untuk memperkuat perempuan dalam aspek pendidikan, hukum, ekonomi, budaya, politik dan sosial.", "years": [false,false,false,false,true] }
+ ],
+ "Komisi Pengkajian, Penelitian dan Pengembangan": [
+  { "id": 53, "name": "Melakukan kajian dan penelitian terhadap berbagai aliran, kepercayaan dan pemikiran yang berkembang dalam Islam yang diduga sesat dan memberikan penjelasan yang benar dan memadai dalam melindungi umat dari aliran, kepercayaan dan pemikiran yang sesat itu.", "years": [false,true,false,false,false] },
+  { "id": 54, "name": "Melakukan pengkajian terhadap penyebaran konten aliran, kepercayaan dan pemikiran dalam Islam yang diduga sesat melalui media massa, media elektronik dan media sosial.", "years": [false,false,true,false,false] },
+  { "id": 55, "name": "Mengadakan kegiatan ilmiah dalam bentuk seminar, lokakarya, FGD atau lainnya, untuk membahas masalah masalah aktual terkait persoalan akidah, khususnya isu, peristiwa dan kejadian yang perlu ditangani oleh Komisi Pengkajian, Penelitian dan Pengembangan MUI.", "years": [true,false,false,false,false] },
+  { "id": 56, "name": "Sosialisasi hasil-hasil kajian dan penelitian melalui jurnal, media massa (cetak, elektronik dan media sosial.", "years": [false,false,false,false,true] },
+  { "id": 57, "name": "Sosialiasi pedoman penanganan, pengawasan dan pembinaan dan standard operating procedure (SOP) pengkajian dan penelitian aliran dan pemikiran sesat sebagai modul pelatihan penelitian aliran keagamaan yang diselenggarakan Komisi Pengkajian, Penelitian dan Pengembangan MUI se-Indonesia serta pihak lain yang membutuhkan peningkatan kapasitas penelitian aliran keagamaan.", "years": [false,true,false,false,false] },
+  { "id": 58, "name": "Menyelenggarakan pelatihan dan workshop penelitian keagamaan.", "years": [false,true,false,false,false] },
+  { "id": 59, "name": "Publikasi hasil pengkajian dan penelitian berupa ensiklopedi aliran sesat dan diduga sesat di Indonesia untuk internal MUI.", "years": [false,false,false,false,true] }
+ ],
+ "Komisi Informasi dan Komunikasi": [
+  { "id": 60, "name": "Mengembangkan media informasi dan komunikasi MUI Pusat, Provinsi, dan Kab/Kota secara konvergen dan sinergis, dengan memaksimalkan multiplatform (cyber, penyiaran, dan cetak), meng-update dinamika teknologi informasi dan komunikasi, agar peran MUI sebagai khadimul ummah wa shadiiqul hukuumah, yang berparadigma Islam wasathiyah, makin produktif dan efektif.", "years": [true,true,false,false,false] },
+  { "id": 61, "name": "Melakukan pembenahan berkelanjutan jaringan dan tata kelola informasi dan komunikasi MUI se-Indonesia, dengan memaksimalkan daya dukung kemajuan teknologi informasi dan komunikasi, serta memperkuat kompetensi sumber daya manusia pendukung.", "years": [false,true,false,false,false] },
+  { "id": 62, "name": "Mendorong produksi konten media yang mencerdaskan, berakhlak dan mensejahterakan, baik konten tulisan, video, audio, visual dan sebagainya dengan memperkuat kolaborasi berbagai pemangku kepentingan dan kebijakan, mulai penulis, jurnalis, influencer, youtuber, penerbit, media massa, sampai kementerian agar konten media, baik media pers, media sosial, jurnal ilmiah, maupun perbukuan, semakin bermanfaat dan sehat, sebagaimana dipandu Fatwa MUI tentang Pedoman Muamalah di Media Sosial dan fatwa lain terkait.", "years": [false,false,true,false,true] },
+  { "id": 63, "name": "Memastikan penegakan dan perbaikan regulasi dan kode etik di bidang informasi dan komunikasi dengan mengembangkan kemitraan (partnership) dengan berbagai pemangku kepentingan (stake holders), baik regulator, otoritas media massa (Dewan Pers, KPI, Kominfo), industri media massa, dan pihak lainnya secara dinamis, termasuk mendialogkan norma dalam fatwa-fatwa MUI yang terkait infokom sebagai bahan pembenahan regulasi dan kode etik bidang infokom", "years": [false,false,false,true,false] },
+  { "id": 64, "name": "Mengoptimalkan modemisasi kepustakaan MUI Pusat dan daerah sebagai pusat informasi, dokumentasi dan sumber riset dengan menyesuaikan kemajuan teknologi digital.", "years": [false,false,false,false,true] }
+ ],
+ "Komisi Pembinaan Seni Budaya Islam": [
+  { "id": 65, "name": "Meningkatkan keterlibatan budayawan dan tokoh Islam dalam menangkal budaya barat yang cenderung negatif, serta kritik terhadap siaran media cetak dan elektronik yang merusak akidah umat Islam.", "years": [false,true,false,false,false] },
+  { "id": 66, "name": "Mengusahakan program kerja sama lintas komisi dalam melestarikan budaya dan syiar Islam.", "years": [true,false,true,false,false] },
+  { "id": 67, "name": "Mendukung dan ikut serta menjadikan Halal Fest. dan festival budaya Islam lainnya menjadi skala nasional dan internasioal.", "years": [true,true,true,true,true] },
+  { "id": 68, "name": "Mendorong lahirnya tontonan dan produksi kesenian yang tidak mengandung unsur kekerasan, pornograi dan pelecehan terhadap nilai-nilai kemanusiaan yang Islami.", "years": [false,false,false,false,true] },
+  { "id": 69, "name": "Membina generasi muda (remaja, pelajar, santri dan mahasiswa) agar memiliki jiwa berbudaya Islam melalui program “Remaja bertanya Ulama Menjawab” dan berbagai program pelatihan lainnya.", "years": [false,false,true,false,false] }
+ ],
+ "SIAR – Lembaga Sistim Informasi dan Aplikasi Terintegrasi": [
+  { "id": 70, "name": "Pengembangan portal dan aplikasi terintegrasi (MUI Super App/Integrated System), berupa integrasi layanan data antar-lembaga, seperti LPPOM untuk database produk halal, DSN-MUI untuk data lembaga keuangan syariah dan BASYARNAS).", "years": [false,false,false,false,false] },
+  { "id": 71, "name": "Pengembangan one-stop service digital untuk mempermudah pendaftaran sertifikasi, konsultasi syariah, hingga pengajuan arbitrase.", "years": [false,false,false,false,false] },
+  { "id": 72, "name": "Pengelolaan database pusat dan keanggotaan (Database Management), berupa pendataan dan digitalisasi basis data ulama, dai/mubaligh, pondok pesantren dan ormas Islam di Kota Tangerang, termasuk pengelolaan sistem kartu anggota atau direktori resmi tokoh keagamaan.", "years": [false,false,false,false,false] },
+  { "id": 73, "name": "Digitalisasi fatwa dan literasi keislaman, berupa pembuatan repositori dan mesin pencari fatwa digital (Kumpulan Fatwa MUI) agar mudah diakses oleh publik dan praktisi hukum.", "years": [false,false,false,false,false] },
+  { "id": 74, "name": "Pengelolaan e-library dan penerbitan digital untuk buku serta jurnal resmi keluaran MUI Pusat.", "years": [false,false,false,false,false] }
+ ],
+ "LP2KU – Lembaga Pendidikan dan Pelatihan Kader Ulama": [
+  { "id": 75, "name": "Penyelenggaraan Pendidikan Kader ulama (PKU) bergelar kesarjanaan akademik formal melalui kerja sama dengan lembaga perguruan tinggi yang ada di Kota Tangerang.", "years": [false,false,false,false,false] },
+  { "id": 76, "name": "Rekrutmen dan seleksi ketat bagi calon ulama muda berprestasi dari berbagai wilayah, ormas Islam dan alumni pondok pesantren di Kota Tangerang.", "years": [false,false,false,false,false] },
+  { "id": 77, "name": "Pembelajaran intensif yang berfokus pada kajian kitab turats (kitab kuning), metodologi ijtihad, ushul fiqh, ilmu falak, serta studi fatwa.", "years": [false,false,false,false,false] },
+  { "id": 78, "name": "Penguatan kapasitas keilmuan Islam kontemporer dan metodologi fatwa.", "years": [false,false,false,false,false] },
+  { "id": 79, "name": "Workshop penyusunan draft fatwa dan legal drafting keagamaan agar peserta mampu merumuskan ketetapan hukum yang solutif bagi masyarakat.", "years": [false,false,false,false,false] },
+  { "id": 80, "name": "Penugasan dan pengabdian kader di berbagai komisi/lembaga MUI Kota Tangerang serta kecamatan untuk mempraktikkan ilmu kepemimpinan dan dakwah.", "years": [false,false,false,false,false] }
+ ],
+ "GANAS ANNAR – Gerakan Nasional Anti Narkoba": [
+  { "id": 81, "name": "Edukasi dan dakwah anti-Narkoba (Prevention & Advocacy), berupa Pelatihan Dakwah Anti-Narkoba bagi para dai, ustaz dan penceramah agar dapat menyisipkan pesan bahaya zat adiktif dalam khutbah atau majelis taklim.", "years": [false,false,false,false,false] },
+  { "id": 82, "name": "Kampanye dan sosialisasi bahaya narkoba di lingkungan sekolah, pesantren, kampus, serta organisasi kepemudaan.", "years": [false,false,false,false,false] },
+  { "id": 83, "name": "Pendampingan dan rehabilitasi berbasis keagamaan (Psychospiritual Healing).", "years": [false,false,false,false,false] },
+  { "id": 84, "name": "Pengembangan metode rehabilitasi spiritual (dzikir, bimbingan konseling Islam dan pembinaan karakter) untuk korban penyalahgunaan narkoba.", "years": [false,false,false,false,false] },
+  { "id": 85, "name": "Kerja sama dengan pesantren-pesantren yang memiliki program khusus terapi dan rehabilitasi pecandu.", "years": [false,false,false,false,false] },
+  { "id": 86, "name": "Menjalin kemitraan strategis dan advokasi kebijakan (Inter-agency Synergy) berupa sinergi program dengan Badan Narkotika Nasional (BNN), Kepolisian RI, Kementerian Agama, serta Kementerian Kesehatan dalam aksi pencegahan di Kota Tangerang.", "years": [false,false,false,false,false] },
+  { "id": 87, "name": "Advokasi hukum dan penegakan regulasi untuk perlindungan anak dan remaja dari ancaman peredaran gelap narkoba.", "years": [false,false,false,false,false] },
+  { "id": 88, "name": "Pembentukan dan pembinaan kader relawan anti-narkoba & Posko Ganas Annar di tingkat kecamatan.", "years": [false,false,false,false,false] }
+ ],
+ "LP3H – Lembaga Pendampingan Proses Produk Halal": [
+  { "id": 89, "name": "Pendampingan, verifikasi, serta fasilitasi sertifikasi halal, khususnya bagi pelaku Usaha Mikro dan Kecil (UMK) melalui jalur self-declare (pernyataan pelaku usaha).", "years": [false,false,false,false,false] },
+  { "id": 90, "name": "Mengadakan pelatihan dan sertifikasi kompetensi secara berkala untuk mencetak Pendamping Proses Produk Halal (P3H) yang profesional.", "years": [false,false,false,false,false] },
+  { "id": 91, "name": "Mengelola dan memperbarui basis data registrasi para pendamping yang aktif di bawah naungan LP3H MUI.", "years": [false,false,false,false,false] },
+  { "id": 92, "name": "Edukasi dan sosialisasi Sadar Halal dengan mengadakan mengadakan workshop dan literasi Sistem Jaminan Produk Halal (SJPH) bagi komunitas pedagang kecil, pasar tradisional dan UMKM binaan.", "years": [false,false,false,false,false] },
+  { "id": 93, "name": "Mengadvokasi pentingnya kepemilikan sertifikat halal untuk meningkatkan daya saing serta nilai jual produk UMK di pasar.", "years": [false,false,false,false,false] },
+  { "id": 94, "name": "Peningkatan promosi dan edukasi halal seperti: kegiatan webinar bertema halal, direct marketing sertifikasi halal, olimpiade halal, customized sosialisasi sertifikasi halal berbasis bisnis proses perusahaan dan lain-lain.", "years": [false,false,false,false,false] }
+ ],
+ "LBH – Lembaga Bantuan Hukum": [
+  { "id": 95, "name": "Menyediakan pendampingan hukum gratis bagi masyarakat kurang mampu, ulama, serta lembaga keagamaan yang menghadapi kasus hukum perdata, pidana, atau tata usaha negara.", "years": [false,false,false,false,false] },
+  { "id": 96, "name": "Menyelenggarakan proses penanganan perkara di luar pengadilan (non-litigasi) melalui mediasi, konsultasi dan negosiasi.", "years": [false,false,false,false,false] },
+  { "id": 97, "name": "Melakukan kajian serta penyusunan masukan terhadap rancangan undang-undang (RUU) atau peraturan daerah (Raperda) yang berdampak pada keumatan.", "years": [false,false,false,false,false] },
+  { "id": 98, "name": "Mengajukan uji materi (judicial review) ke Mahkamah Konstitusi atau Mahkamah Agung terhadap regulasi yang dinilai bertentangan dengan UUD 1945 atau merugikan hak-hak keagamaan masyarakat.", "years": [false,false,false,false,false] },
+  { "id": 99, "name": "Mengadakan sosialisasi, seminar dan penyuluhan hukum mengenai hak-hak konstitusional warga negara, hukum keluarga Islam dan hukum ekonomi syariah.", "years": [false,false,false,false,false] },
+  { "id": 100, "name": "Membina paralegal di tingkat Kota Tangerang dan organisasi kemasyarakatan (ormas) Islam agar mampu memberikan pertolongan pertama hukum di lingkungan Kota Tangerang.", "years": [false,false,false,false,false] },
+  { "id": 101, "name": "Menerima serta menindaklanjuti aduan masyarakat terkait pelanggaran hak beragama, pendirian rumah ibadah atau diskriminasi sosial.", "years": [false,false,false,false,false] },
+  { "id": 102, "name": "Membangun sinergi dengan lembaga penegak hukum (Kepolisian, Kejaksaan, Kehakiman) dan Komnas HAM untuk mengawal penegakan hukum yang adil dan transparan.", "years": [false,false,false,false,false] },
+  { "id": 103, "name": "Menjalin kerja sama dengan lembaga konsultasi dan bantuan hukum dalam membela dan memperjuangkan hak-hak umat Islam atau lembaga Islam.", "years": [false,false,false,false,false] }
+ ],
+ "Lembaga Kesehatan": [
+  { "id": 104, "name": "Edukasi dan edu-dakwah kesehatan masyarakat (Public Health Literacy).", "years": [false,false,false,false,false] },
+  { "id": 105, "name": "Sosialisasi Pola Hidup Bersih dan Sehat (PHBS) serta prinsip thayyib (sehat dan halal) melalui pendekatan keagamaan di masjid, majelis taklim dan pesantren.", "years": [false,false,false,false,false] },
+  { "id": 106, "name": "Kampanye pencegahan penyakit menular, penanganan stunting, kesehatan ibu dan anak, serta kesehatan mental berbasis psikospiritual Islam.", "years": [false,false,false,false,false] },
+  { "id": 107, "name": "Kajian fiqih medis dan advokasi kehalalan obat/vaksin.", "years": [false,false,false,false,false] },
+  { "id": 108, "name": "Mengkaji isu-isu sains medis kontemporer (seperti rekayasa genetika, pemanfaatan organ, terapi sel punca, hingga kehalalan bahan baku obat dan vaksin) sebagai masukan untuk Komisi Fatwa MUI.", "years": [false,false,false,false,false] },
+  { "id": 109, "name": "Bekerja sama dengan LP3H dalam mendampingi dunia industri farmasi dan alat kesehatan dalam menerapkan standar kehalalan serta keamanan produk medis.", "years": [false,false,false,false,false] },
+  { "id": 110, "name": "Pendampingan kepada rumah sakit dan fasilitas kesehatan syariah.", "years": [false,false,false,false,false] },
+  { "id": 111, "name": "Bekerja sama dengan LP3H dalam mendampingi fasilitasi sertifikasi rumah sakit syariah.", "years": [false,false,false,false,false] },
+  { "id": 112, "name": "Menyusun standar pelayanan medis yang ramah ibadah bagi pasien di rumah sakit (seperti tata cara bersuci/tayamum dan ibadah orang sakit).", "years": [false,false,false,false,false] },
+  { "id": 113, "name": "Membentuk tim medis dan relawan kesehatan untuk diterjunkan ke daerah bencana alam atau krisis kemanusiaan.", "years": [false,false,false,false,false] },
+  { "id": 114, "name": "Mengadakan program bakti sosial kesehatan, donor darah, dan pemeriksaan kesehatan gratis bagi masyarakat kurang mampu di berbagai wilayah.", "years": [false,false,false,false,false] },
+  { "id": 115, "name": "Menjalin kemitraan dan kerja sama dengan berbagai pihak untuk mengoptimalkan peran serta masyakarakat dalam bidang kesehatan dan kesejahteraan masyarakat.", "years": [false,false,false,false,false] }
+ ],
+ "Lembaga Mualaf Center": [
+  { "id": 116, "name": "Pembinaan akidah dan ibadah (bimbingan keagamaan) kepada para muallaf dengan menyediakan kelas bimbingan dasar Islam, baca-tulis Al-Qur'an, tata cara bersuci (thaharah) dan pelaksanaan shalat.", "years": [false,false,false,false,false] },
+  { "id": 117, "name": "Menyediakan modul, buku panduan, serta media pembelajaran khusus yang mudah dipahami oleh muallaf.", "years": [false,false,false,false,false] },
+  { "id": 118, "name": "Memberikan layanan konseling spiritual dan pendampingan psikologis bagi muallaf yang menghadapi penolakan keluarga atau lingkungan sosial.", "years": [false,false,false,false,false] },
+  { "id": 119, "name": "Memberikan bantuan advokasi hukum serta fasilitasi pengurusan administrasi kependudukan (perubahan status agama di KK/KTP).", "years": [false,false,false,false,false] },
+  { "id": 120, "name": "Penyaluran zakat, infak dan sedekah khusus zakat muallaf untuk pemenuhan kebutuhan dasar (asnaf muallaf).", "years": [false,false,false,false,false] },
+  { "id": 121, "name": "Pelatihan wirausaha, bantuan modal usaha, serta pelatihan keterampilan kerja agar mualaf dapat mandiri secara finansial.", "years": [false,false,false,false,false] },
+  { "id": 122, "name": "Mengembangkan program pembina/pendamping (mentor) yang mendampingi muallaf secara personal (one-on-one).", "years": [false,false,false,false,false] },
+  { "id": 123, "name": "Membangun jejaring komunitas muallaf antarwilayah sebagai wadah silaturahmi, pertukaran pengalaman dan penguatan persaudaraan (ukhuwah).", "years": [false,false,false,false,false] }
+ ],
+ "LPBKI – Lembaga Pentashih Buku dan Konten Keislaman": [
+  { "id": 124, "name": "Memastikan materi dakwah dan keislaman yang beredar di masyarakat sesuai dengan ajaran Islam yang sahih, moderat (wasathiyah), serta bebas dari paham ekstrem atau pemikiran yang menyimpang.", "years": [false,false,false,false,false] },
+  { "id": 125, "name": "Penelaahan dan pentashihan buku dengan menguji dan menelaah naskah atau buku-buku keislaman cetak (seperti buku pelajaran agama, terjemahan Al-Qur'an/Hadis dan buku umum) sebelum diterbitkan secara luas.", "years": [false,false,false,false,false] },
+  { "id": 126, "name": "Sertifikasi konten keislaman dengan memberikan surat tanda pentashihan (tashih) atau rekomendasi kelayakan untuk buku, naskah, maupun media dakwah yang telah memenuhi kriteria kebenaran substansi dan syariat.", "years": [false,false,false,false,false] },
+  { "id": 127, "name": "Pengawasan konten keagamaan digital dan media sosial dengan melakukan monitorin peredaran artikel, e-book, media pembelajaran interaktif, serta konten dakwah di platform digital (website, media sosial dan aplikasi).", "years": [false,false,false,false,false] },
+  { "id": 128, "name": "Penyaringan dan penanganan konten bermasalah dengan mengidentifikasi materi-materi keislaman yang berpotensi memuat ujaran kebencian, narasi ekstremisme, penodaan agama, atau penyimpangan akidah.", "years": [false,false,false,false,false] },
+  { "id": 129, "name": "Menerbitkan panduan penyaringan literasi keagamaan digital.", "years": [false,false,false,false,false] },
+  { "id": 130, "name": "Penulisan materi naskah khutbah dan bulletin Jum’at MUI Kota Tangerang.", "years": [false,false,false,false,false] },
+  { "id": 131, "name": "Meningkatkan mutu dan integritas konten keislaman.", "years": [false,false,false,false,false] },
+  { "id": 132, "name": "Pelatihan standarisasi pentashihan buku dan konten keislaman.", "years": [false,false,false,false,false] }
+ ]
+};
+
+let plans=[];
+
+const planData = {
+ "Komisi Fatwa": [
+  { "id": 1, "general": "Mengembangkan kegiatan ilmu syari’ah di kalangan ulama mengenai berbagai masalah umat Islam sesuai dengan tingkatan kebutuhan dalam memberikan bimbingan dan pedoman hukum bagi umat Islam.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 2, "general": "Membahas, merumuskan dan menetapkan fatwa terkait dengan masalah keagamaan kontemporer.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 3, "general": "Sosialisasi hasil fatwa MUI melalui media cetak dan elektronik.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Ukhuwah Islamiyah": [
+  { "id": 4, "general": "Mendorong adanya pusat kegiatan Islam/Islamic Center di Kota Tangerang dan menjadikan Islamic Centre sebagai pusat dakwah, ukhuwah dan tamaddun Islami.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Dakwah": [
+  { "id": 5, "general": "Mengembangkan dan meningkatkan pelaksanaan dakwah di daerah-daerah khusus.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 6, "general": "Melakukan pengkajian tentang metode, materi, subjek dan media dakwah sesuai perkembangan zaman.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 7, "general": "Melakukan dakwah pemberdayaan untuk meningkatkan ekonomi dan kesejahteraan masyarakat agar terhindar dari upaya pendangkalan akidah.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Pendidikan dan Kaderisasi": [
+  { "id": 8, "general": "Melaksanakan program diklat pendidikan kader ulama non-gelar.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 9, "general": "Menggelar program pesantren Ramadhan bagi remaja lintas ormas Islam di Kota Tangerang.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Pemberdayaan Ekonomi Umat": [
+  { "id": 10, "general": "Dakwah ekonomi umat untuk membangun pemahaman dan pencerahan terkait ikhtiar kehidupan di bidang ekonomi yang merupakan gerakan ekonomi umat Islam sebagai solusi kemajuan umat dan membangun jaringan, sinergi, persatuan dan kemandirian ekonomi umat.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Hukum dan HAM": [
+  { "id": 11, "general": "Mengembangkan kajian-kajian hukum Islam di berbagai bidang kehidupan sebagai masukan dan bahan pembentukan peraturan perundang-undangan yang berkaitan dengan hukum Islam dan pengembangan hukum Islam di tanah air.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 12, "general": "Memberikan pembelaan dan perlindungan terhadap peraturan perundang-undangan, termasuk UU, yang sesuai dengan ajaran Islam dan aspirasi umat Islam dan bangsa untuk tetap berlaku apabila UU atau peraturan tersebut dilakukan pengujian konstitusionalitas peraturan (judicial review) di Mahkamah Konstitusi atau di Mahkamah Agung, dan sebaliknya melakukan atau menjadi pihak terkait yang ikut melakukan pengujian konstitusionalitas peraturan (judicial review) untuk membatalkan keberlakuan UU atau peraturan lainnya apabila regulasi tersebut tidak sesuai dengan ajaran Islam, kepentingan umat Islam dan bangsa di Mahkamah Konstitusi atau Mahkamah Agung.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 13, "general": "Meningkatkan peran dan partisipasi MUI dalam pembentukan peraturan perundang-undangan di daerah agar isi regulasi tersebut memuat nilai-nilai ajaran Islam dan mendukung terwujudnya keadilan, kesejahteraan dan kemajuan umat dan bangsa.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 14, "general": "Melakukan pemantauan terhadap pelaksanaan dan situasi hak asasi manusia di Kota Tangerang serta menyusun pandangan dan sikap MUI terhadap peristiwa atau situasi yang berkaitan dengan hak asasi manusia.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 15, "general": "Menjalin kerja sama dengan lembaga konsultasi dan bantuan hukum dalam ikhtiar membela dan memperjuangkan hak-hak umat Islam atau lembaga Islam.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Hubungan Antar Umat Beragama": [
+  { "id": 16, "general": "Mengupayakan terwujudnya pemahaman yang sama tentang toleransi antar umat di kalangan pemuka/pemimpin pemerintah.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 17, "general": "Mengikuti perkembangan penyusunan Raperda yang berpotensi menimbulkan pertentangan antar umat beragama dan berupaya memantau pelaksanaannya secara konsisten.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Perempuan, Remaja dan Keluarga": [
+  { "id": 18, "general": "Memberikan kontribusi pemikiran tentang ajaran Islam mengenai berbagai isu yang berkaitan dengan perempuan, remaja dan keluarga, serta memberikan solusi terhadap permasalahan yang dihadapi.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 19, "general": "Membuat Program Penguatan Kelembagaan Komisi Perempuan Remaja dan Keluarga (pemetaan /mapping potensi dan penguatan jejaring).", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Pengkajian, Penelitian dan Pengembangan": [
+  { "id": 20, "general": "Melakukan kajian dan penelitian terhadap berbagai aliran, kepercayaan dan pemikiran yang berkembang dalam Islam yang diduga sesat dan memberikan penjelasan yang benar dan memadai dalam melindungi umat dari aliran, kepercayaan dan pemikiran yang sesat itu.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 21, "general": "Sosialiasi pedoman penanganan, pengawasan dan pembinaan dan standard operating procedure (SOP) pengkajian dan penelitian aliran dan pemikiran sesat sebagai modul pelatihan penelitian aliran keagamaan yang diselenggarakan Komisi Pengkajian, Penelitian dan Pengembangan MUI se-Indonesia serta pihak lain yang membutuhkan peningkatan kapasitas penelitian aliran keagamaan.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 22, "general": "Menyelenggarakan pelatihan dan workshop penelitian keagamaan.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Informasi dan Komunikasi": [
+  { "id": 23, "general": "Mengembangkan media informasi dan komunikasi MUI Pusat, Provinsi, dan Kab/Kota secara konvergen dan sinergis, dengan memaksimalkan multiplatform (cyber, penyiaran, dan cetak), meng-update dinamika teknologi informasi dan komunikasi, agar peran MUI sebagai khadimul ummah wa shadiiqul hukuumah, yang berparadigma Islam wasathiyah, makin produktif dan efektif.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 24, "general": "Melakukan pembenahan berkelanjutan jaringan dan tata kelola informasi dan komunikasi MUI se-Indonesia, dengan memaksimalkan daya dukung kemajuan teknologi informasi dan komunikasi, serta memperkuat kompetensi sumber daya manusia pendukung.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "Komisi Pembinaan Seni Budaya Islam": [
+  { "id": 25, "general": "Meningkatkan keterlibatan budayawan dan tokoh Islam dalam menangkal budaya barat yang cenderung negatif, serta kritik terhadap siaran media cetak dan elektronik yang merusak akidah umat Islam.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" },
+  { "id": 26, "general": "Mendukung dan ikut serta menjadikan Halal Fest. dan festival budaya Islam lainnya menjadi skala nasional dan internasioal.", "fixed": true, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }
+ ],
+ "SIAR – Lembaga Sistim Informasi dan Aplikasi Terintegrasi": [{ "id": 27, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "LP2KU – Lembaga Pendidikan dan Pelatihan Kader Ulama": [{ "id": 28, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "GANAS ANNAR – Gerakan Nasional Anti Narkoba": [{ "id": 29, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "LP3H – Lembaga Pendampingan Proses Produk Halal": [{ "id": 30, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "LBH – Lembaga Bantuan Hukum": [{ "id": 31, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "Lembaga Kesehatan": [{ "id": 32, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "Lembaga Mualaf Center": [{ "id": 33, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }],
+ "LPBKI – Lembaga Pentashih Buku dan Konten Keislaman": [{ "id": 34, "general": "", "fixed": false, "work": "", "goal": "", "participants": "", "timePlace": "", "cost": "", "partner": "", "responsible": "" }]
+};
+const PLAN_FIELDS=["work","goal","participants","timePlace","cost","partner","responsible"];
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const keyOf=n=>n.replace(/[\/\s]+/g,'_');
+function unit(){ return $("unitType").value; }
+
+/* ================= FIREBASE SYNC ================= */
+function setFb(text,ok){
+ const el=$("fbStatus");
+ el.textContent=text;
+ el.style.background=ok?'#e4f5ed':'#fff0ef';
+ el.style.color=ok?'#187653':'#b33b35';
+}
+const timers={};
+function debounce(id,fn,ms){ clearTimeout(timers[id]); timers[id]=setTimeout(fn,ms); }
+
+function saveProgramsFS(name){
+ setFb('⏳ Menyimpan…',true);
+ return db.collection('programs').doc(keyOf(name)).set({
+  unit:name,
+  list:programs[name]||[],
+  updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+ }).then(()=>setFb('✅ Tersinkron Firebase',true))
+   .catch(e=>{console.error(e);setFb('⚠️ Gagal simpan: '+(e.code||''),false);throw e;});
+}
+
+function savePlanRowsFS(name){
+ setFb('⏳ Menyimpan…',true);
+ return db.collection('plans').doc(keyOf(name)).set({
+  unit:name,
+  rows:planData[name]||[],
+  updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+ }).then(()=>setFb('✅ Tersinkron Firebase',true))
+   .catch(e=>{console.error(e);setFb('⚠️ Gagal simpan: '+(e.code||''),false);throw e;});
+}
+
+function listenFirestore(){
+ const onErr=e=>{console.error(e);setFb('⚠️ Firebase: '+(e.code||e.message),false);};
+
+ // Program umum
+ db.collection('programs').onSnapshot(snap=>{
+  let changed=false;
+  snap.docChanges().forEach(ch=>{
+   if(ch.type==='removed') return;
+   const d=ch.doc.data();
+   if(d.unit && Array.isArray(d.list) && JSON.stringify(programs[d.unit])!==JSON.stringify(d.list)){
+    programs[d.unit]=d.list; changed=true;
+   }
+  });
+  if(changed) renderPrograms();
+  setFb('✅ Tersinkron Firebase',true);
+ },onErr);
+
+ // Rencana program kerja 2027
+ db.collection('plans').onSnapshot(snap=>{
+  const typing=document.activeElement && $("planTableBody").contains(document.activeElement);
+  let changed=false;
+  snap.docChanges().forEach(ch=>{
+   if(ch.type==='removed') return;
+   const d=ch.doc.data();
+   if(d.unit && Array.isArray(d.rows) && JSON.stringify(planData[d.unit])!==JSON.stringify(d.rows)){
+    if(typing && d.unit===$("planUnitName").value) return; // jangan ganggu yang lagi ngetik
+    planData[d.unit]=d.rows; changed=true;
+   }
+  });
+  if(changed) renderPlanTable();
+  setFb('✅ Tersinkron Firebase',true);
+ },onErr);
+
+ // Dokumen terunggah
+ db.collection('documents').orderBy('createdAt','desc').onSnapshot(snap=>{
+  plans=snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderPlans();
+ },onErr);
+}
+
+/* ================= PROGRAM UMUM ================= */
+function fillUnits(){
+ const names=Object.keys(unitData[unit()]);
+ $("unitName").innerHTML="";
+ names.forEach(n=>{
+  let o=document.createElement("option");
+  o.value=n; o.textContent=n;
+  $("unitName").append(o);
+ });
+ renderPrograms();
+}
+
+function fillRows(body,type,name,withActions){
+ const canEdit=type==="Lembaga";
+ const list=programs[name]||[];
+ body.innerHTML="";
+
+ if(!list.length){
+  body.innerHTML='<tr><td colspan="'+(withActions?8:7)+'" class="empty">Belum ada program umum.</td></tr>';
+  return;
+ }
+
+ list.forEach((p,index)=>{
+  const tr=document.createElement("tr");
+  const no=document.createElement("td");
+  no.textContent=index+1;
+  tr.append(no);
+
+  const nm=document.createElement("td");
+  nm.className="name";
+  nm.textContent=p.name;
+  tr.append(nm);
+
+  YEARS.forEach((y,i)=>{
+   const td=document.createElement("td");
+   td.className="c"+(y===2027?" y27":"");
+
+   if(canEdit){
+    const cb=document.createElement("input");
+    cb.type="checkbox";
+    cb.checked=!!p.years[i];
+    cb.title="Tahun "+y;
+    cb.addEventListener("change",()=>{
+     p.years[i]=cb.checked;
+     saveProgramsFS(name).catch(()=>{});
+    });
+    td.append(cb);
+   }else if(p.years[i]){
+    const t=document.createElement("span");
+    t.className="tick";
+    t.textContent="✓";
+    td.append(t);
+   }
+   tr.append(td);
+  });
+
+  if(withActions){
+   const act=document.createElement("td");
+   if(canEdit){
+    const box=document.createElement("div");
+    box.className="actions";
+    const e=document.createElement("button");
+    e.className="secondary"; e.textContent="Edit";
+    e.onclick=()=>editProgram(p.id);
+
+    const d=document.createElement("button");
+    d.className="danger"; d.textContent="Hapus";
+    d.onclick=()=>deleteProgram(p.id);
+
+    box.append(e,d);
+    act.append(box);
+   }else{
+    const lock=document.createElement("span");
+    lock.className="status locked"; lock.textContent="🔒 Terkunci";
+    act.append(lock);
+   }
+   tr.append(act);
+  }
+  body.append(tr);
+ });
+}
+
+function renderPrograms(){
+ const canEdit=unit()==="Lembaga";
+ $("permission").textContent=canEdit?"Bisa diedit":"Hanya lihat";
+ $("permission").className="status "+(canEdit?"editable":"locked");
+ $("permissionNote").textContent=canEdit
+ ? "Mode Lembaga: program dapat ditambah, diedit, dan dihapus. Tahun pelaksanaan dapat diisi dengan mencentang kolom tahun."
+ : "Mode Komisi: program umum dan tahun pelaksanaan hanya dapat dilihat, tidak dapat ditambah, diedit, atau dihapus.";
+ $("addBox").style.display=canEdit?"block":"none";
+ fillRows($("programBody"),unit(),$("unitName").value,true);
+}
+
+function renderAllTables(){ renderPrograms(); }
+
+function addProgram(){
+ if(unit()!=="Lembaga") return alert("Komisi tidak memiliki akses edit.");
+ const name=$("newName").value.trim();
+ if(!name) return alert("Isi nama program terlebih dahulu.");
+ const key=$("unitName").value;
+ if(!programs[key]) programs[key]=[];
+ programs[key].push({ id:Date.now(), name, years:[false,false,false,false,false] });
+ $("newName").value="";
+ renderAllTables();
+ saveProgramsFS(key).catch(()=>{});
+}
+
+function editProgram(id){
+ if(unit()!=="Lembaga")return;
+ const key=$("unitName").value;
+ const p=(programs[key]||[]).find(x=>x.id===id);
+ if(!p)return;
+ const name=prompt("Ubah nama program:",p.name);
+ if(name===null)return;
+ if(!name.trim())return alert("Nama program tidak boleh kosong.");
+ p.name=name.trim();
+ renderAllTables();
+ saveProgramsFS(key).catch(()=>{});
+}
+
+function deleteProgram(id){
+ if(unit()!=="Lembaga")return;
+ const key=$("unitName").value;
+ const p=(programs[key]||[]).find(x=>x.id===id);
+ if(!p)return;
+ if(confirm('Hapus program "'+p.name+'"?')){
+  programs[key]=programs[key].filter(x=>x.id!==id);
+  renderAllTables();
+  saveProgramsFS(key).catch(()=>{});
+ }
+}
+
+/* ================= RENCANA PROGRAM 2027 ================= */
+function queuePlanSave(key){ debounce('plan_'+key,()=>savePlanRowsFS(key).catch(()=>{}),800); }
+
+function renderPlanTable(){
+ const key=$("planUnitName").value;
+ if(!planData[key]) planData[key]=[];
+ const rows=planData[key];
+ const body=$("planTableBody");
+ body.innerHTML="";
+
+ if(!rows.length){
+  body.innerHTML='<tr><td colspan="10" class="empty">Belum ada baris. Klik "+ Tambah Baris".</td></tr>';
+  updateProgressStats();
+  return;
+ }
+
+ rows.forEach((r,index)=>{
+  const tr=document.createElement("tr");
+
+  const no=document.createElement("td");
+  no.textContent=index+1;
+  tr.append(no);
+
+  const gen=document.createElement("td");
+  gen.className="name";
+  if(r.fixed){
+   gen.textContent=r.general;
+  }else{
+   const ta=document.createElement("textarea");
+   ta.rows=3; ta.placeholder="Program umum";
+   ta.value=r.general;
+   ta.addEventListener("input",()=>{r.general=ta.value; updateProgressStats(); queuePlanSave(key);});
+   gen.append(ta);
+  }
+  tr.append(gen);
+
+  PLAN_FIELDS.forEach(f=>{
+   const td=document.createElement("td");
+   const ta=document.createElement("textarea");
+   ta.rows=3; ta.value=r[f]||"";
+   ta.addEventListener("input",()=>{r[f]=ta.value; updateProgressStats(); queuePlanSave(key);});
+   td.append(ta);
+   tr.append(td);
+  });
+
+  const act=document.createElement("td");
+  const del=document.createElement("button");
+  del.className="danger"; del.textContent="Hapus";
+  del.onclick=()=>{
+   if(confirm("Hapus baris ini?")){
+    rows.splice(index,1);
+    renderPlanTable();
+    savePlanRowsFS(key).catch(()=>{});
+   }
+  };
+  act.append(del);
+  tr.append(act);
+  body.append(tr);
+ });
+
+ updateProgressStats();
+}
+
+function updateProgressStats(){
+ const key=$("planUnitName").value;
+ const rows=planData[key]||[];
+ if(!rows.length){
+  $("progFill").style.width="0%";
+  $("progText").textContent="0% Terisi untuk "+key;
+  return;
+ }
+ let totalFields=rows.length * PLAN_FIELDS.length;
+ let filledFields=0;
+ rows.forEach(r=>{
+  PLAN_FIELDS.forEach(f=>{
+   if(r[f] && r[f].trim()!=="") filledFields++;
+  });
+ });
+ let percent=Math.round((filledFields / totalFields) * 100);
+ $("progFill").style.width=percent+"%";
+ $("progText").textContent=percent+"% Kelengkapan Data ("+key+")";
+}
+
+function addPlanRow(){
+ const key=$("planUnitName").value;
+ if(!planData[key]) planData[key]=[];
+ planData[key].push({
+  id:Date.now(),general:"",fixed:false,
+  work:"",goal:"",participants:"",timePlace:"",cost:"",partner:"",responsible:""
+ });
+ renderPlanTable();
+ queuePlanSave(key);
+}
+
+function fillPlanUnits(){
+ const type=$("planUnitType").value;
+ const sel=$("planUnitName");
+ sel.innerHTML="";
+ Object.keys(unitData[type]).forEach(name=>{
+  const option=document.createElement("option");
+  option.value=name; option.textContent=name;
+  sel.append(option);
+ });
+ renderPlanTable();
+}
+
+async function savePlan(){
+ const btn=$("savePlan");
+ btn.disabled=true;
+ const oldText=btn.textContent;
+ btn.textContent="Menyimpan…";
+ try{
+  const unitName=$("planUnitName").value;
+  clearTimeout(timers['plan_'+unitName]);
+  await savePlanRowsFS(unitName);
+
+  const file=$("planFile").files[0];
+  if(file){
+   const path='dokumen/'+keyOf(unitName)+'/'+Date.now()+'_'+file.name.replace(/[^\w.\-]+/g,'_');
+   const ref=storage.ref(path);
+   await ref.put(file);
+   const url=await ref.getDownloadURL();
+   await db.collection('documents').add({
+    unitType:$("planUnitType").value,
+    unit:unitName,
+    fileName:file.name,
+    fileUrl:url,
+    storagePath:path,
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+   });
+   $("planFile").value="";
+  }
+  alert("Rencana Program Kerja 2027 berhasil disimpan ke Firebase.");
+ }catch(e){
+  console.error(e);
+  alert("Gagal menyimpan: "+(e.code||e.message)+"\nCek Rules Firestore/Storage di Firebase Console.");
+ }finally{
+  btn.disabled=false;
+  btn.textContent=oldText;
+ }
+}
+
+function renderPlans(){
+ const body=$("planHistory");
+ body.innerHTML="";
+
+ if(!plans.length){
+  body.innerHTML='<tr><td colspan="3" class="empty">Belum ada dokumen rencana program.</td></tr>';
+  return;
+ }
+
+ plans.forEach(p=>{
+  const tr=document.createElement("tr");
+
+  const unitCell=document.createElement("td");
+  unitCell.textContent=p.unitType+" — "+p.unit;
+  tr.append(unitCell);
+
+  const fileCell=document.createElement("td");
+  const a=document.createElement("a");
+  a.href=p.fileUrl;
+  a.target="_blank";
+  a.rel="noopener";
+  a.textContent=p.fileName;
+  fileCell.append(a);
+  tr.append(fileCell);
+
+  const actionCell=document.createElement("td");
+  const btnPres=document.createElement("button");
+  btnPres.className="primary";
+  btnPres.textContent="📺 Tampilkan Presentasi";
+  btnPres.onclick=()=>presentSingleDoc(p);
+
+  const del=document.createElement("button");
+  del.className="danger";
+  del.textContent="Hapus";
+  del.style.marginLeft="6px";
+  del.onclick=async()=>{
+   if(!confirm("Hapus dokumen rencana program ini?")) return;
+   try{
+    if(p.storagePath) await storage.ref(p.storagePath).delete().catch(()=>{});
+    await db.collection('documents').doc(p.id).delete();
+   }catch(e){ alert("Gagal hapus: "+(e.code||e.message)); }
+  };
+
+  actionCell.append(btnPres, del);
+  tr.append(actionCell);
+  body.append(tr);
+ });
+}
+
+/* ================= EKSPOR WORD (.docx ASLI) ================= */
+function triggerDownload(blob,filename){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url; a.download=filename;
+ document.body.appendChild(a); a.click(); document.body.removeChild(a);
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+
+// Fallback kalau library docx gagal dimuat: HTML Word dengan ekstensi .doc (bukan .docx)
+function fallbackDoc(title,headers,rows,filename){
+ let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><style>@page{size:A4 landscape;margin:2cm}body{font-family:Calibri,Arial;font-size:10pt}h1{text-align:center;color:#23866b;font-size:14pt}table{border-collapse:collapse;width:100%}th,td{border:1px solid #23866b;padding:5pt;vertical-align:top}th{background:#e4f5ed}</style></head><body>';
+ h+='<h1>'+esc(title).replace(/\n/g,'<br>')+'</h1><table><tr>'+headers.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr>';
+ rows.forEach(r=>{ h+='<tr>'+r.map(c=>'<td>'+esc(c).replace(/\n/g,'<br>')+'</td>').join('')+'</tr>'; });
+ h+='</table></body></html>';
+ triggerDownload(new Blob(['\ufeff'+h],{type:'application/msword'}),filename.replace(/\.docx$/i,'.doc'));
+}
+
+function buildDocx({title,headers,rows,fracs,landscape,centerCols,filename}){
+ if(typeof docx==='undefined'){
+  alert("Library .docx gagal dimuat (cek internet). Diunduh sebagai .doc.");
+  return fallbackDoc(title,headers,rows,filename);
+ }
+ const D=docx;
+ const total=landscape?15400:10460;
+ const widths=fracs.map(f=>Math.round(f*total));
+
+ const cell=(text,o)=>new D.TableCell({
+  width:{size:o.w,type:D.WidthType.DXA},
+  shading:o.fill?{type:D.ShadingType.CLEAR,color:"auto",fill:o.fill}:undefined,
+  margins:{top:60,bottom:60,left:80,right:80},
+  children:String(text??"").split("\n").map(line=>new D.Paragraph({
+   alignment:o.center?D.AlignmentType.CENTER:D.AlignmentType.LEFT,
+   children:[new D.TextRun({text:line,bold:!!o.bold,size:18,color:o.color})]
+  }))
+ });
+
+ const headRow=new D.TableRow({
+  tableHeader:true,
+  children:headers.map((h,i)=>cell(h,{w:widths[i],fill:"E4F5ED",bold:true,center:true,color:"187653"}))
+ });
+ const bodyRows=rows.map(r=>new D.TableRow({
+  cantSplit:true,
+  children:r.map((c,i)=>cell(c,{w:widths[i],center:centerCols.includes(i)}))
+ }));
+
+ const titleParas=title.split("\n").map(t=>new D.Paragraph({
+  alignment:D.AlignmentType.CENTER,
+  children:[new D.TextRun({text:t,bold:true,size:28,color:"23866B"})]
+ }));
+
+ const doc=new D.Document({
+  sections:[{
+   properties:{page:{
+    size:{orientation:landscape?D.PageOrientation.LANDSCAPE:D.PageOrientation.PORTRAIT},
+    margin:{top:720,right:720,bottom:720,left:720}
+   }},
+   children:[
+    ...titleParas,
+    new D.Paragraph({alignment:D.AlignmentType.CENTER,spacing:{after:200},
+     children:[new D.TextRun({text:"PRAMUKERDA II MUI KOTA TANGERANG",size:20,color:"59675F"})]}),
+    new D.Table({width:{size:total,type:D.WidthType.DXA},columnWidths:widths,rows:[headRow,...bodyRows]})
+   ]
+  }]
+ });
+
+ D.Packer.toBlob(doc).then(blob=>triggerDownload(blob,filename))
+  .catch(e=>{console.error(e);alert("Gagal membuat file Word: "+e.message);});
+}
+
+const safeName=s=>s.replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'');
+
+function exportProgramUmumDocx(){
+ const uName=$("unitName").value;
+ const list=programs[uName]||[];
+ const rows=list.length
+  ? list.map((p,i)=>[i+1,p.name,...p.years.map(y=>y?"✓":"")])
+  : [["","Belum ada data program umum.","","","","",""]];
+ buildDocx({
+  title:"PROGRAM UMUM 2026–2030\n"+uName.toUpperCase(),
+  headers:["No","Program Umum","2026","2027","2028","2029","2030"],
+  rows,
+  fracs:[0.06,0.54,0.08,0.08,0.08,0.08,0.08],
+  landscape:false,
+  centerCols:[0,2,3,4,5,6],
+  filename:"Program_Umum_"+safeName(uName)+".docx"
+ });
+}
+
+function exportPlanDocx(){
+ const uName=$("planUnitName").value;
+ const list=planData[uName]||[];
+ const rows=list.length
+  ? list.map((r,i)=>[i+1,r.general||"-",r.work||"-",r.goal||"-",r.participants||"-",r.timePlace||"-",r.cost||"-",r.partner||"-",r.responsible||"-"])
+  : [["","Belum ada baris program kerja.","","","","","","",""]];
+ buildDocx({
+  title:"RENCANA PROGRAM KERJA 2027\n"+uName.toUpperCase(),
+  headers:["No","Program Umum","Program Kerja 2027","Tujuan","Peserta","Waktu & Tempat","Biaya","Mitra Kerja","Penanggung Jawab"],
+  rows,
+  fracs:[0.04,0.16,0.14,0.12,0.10,0.12,0.08,0.11,0.13],
+  landscape:true,
+  centerCols:[0],
+  filename:"Rencana_Program_Kerja_2027_"+safeName(uName)+".docx"
+ });
+}
+
+/* ================= MODE PRESENTASI ================= */
+function openPresentationModal(){
+ const pUName=$("planUnitName").value;
+ const rows=planData[pUName]||[];
+
+ $("presentationModal").style.display="flex";
+ $("presTitle").textContent="📊 Slide Presentasi Rapat: "+pUName;
+
+ let html=`<div style="line-height:1.6">
+  <div style="background:#e4f5ed;padding:12px;border-radius:8px;margin-bottom:15px;color:#187653">
+   <strong>Status Capaian:</strong> ${esc($("progText").textContent)}
+  </div>
+  <h3>1. Rencana Program Kerja 2027 (Tabel Isian)</h3>`;
+
+ if(!rows.length){
+  html+=`<p class="muted">Belum ada data program kerja 2027 yang diisi.</p>`;
+ }else{
+  html+=`<table style="width:100%;border-collapse:collapse;margin-bottom:20px" border="1" cellpadding="6">
+   <tr style="background:#f4f7f5"><th>No</th><th>Program Kerja</th><th>Tujuan</th><th>Waktu & Tempat</th><th>PJ</th></tr>`;
+  rows.forEach((r,i)=>{
+   html+=`<tr>
+    <td align="center">${i+1}</td>
+    <td><strong>${esc(r.work)||'(Belum diisi)'}</strong><br><small style="color:#666">Umum: ${esc(r.general)||'-'}</small></td>
+    <td>${esc(r.goal)||'-'}</td>
+    <td>${esc(r.timePlace)||'-'}</td>
+    <td>${esc(r.responsible)||'-'}</td>
+   </tr>`;
+  });
+  html+=`</table>`;
+ }
+
+ html+=`<h3>2. Dokumen Terlampir</h3>`;
+ if(!plans.length){
+  html+=`<p class="muted">Tidak ada dokumen Word tambahan yang diunggah.</p>`;
+ }else{
+  html+=`<ul>`;
+  plans.forEach(p=>{
+   html+=`<li><strong>${esc(p.unit)}:</strong> <a href="${esc(p.fileUrl)}" target="_blank" rel="noopener">${esc(p.fileName)}</a></li>`;
+  });
+  html+=`</ul>`;
+ }
+ html+=`</div>`;
+ $("presBody").innerHTML=html;
+}
+
+function presentSingleDoc(p){
+ $("presentationModal").style.display="flex";
+ $("presTitle").textContent="📄 Mode Presentasi Dokumen: "+p.fileName;
+ $("presBody").innerHTML=`
+  <div style="text-align:center;padding:20px">
+   <p style="font-size:16px">Dokumen Word terlampir untuk <strong>${esc(p.unit)}</strong></p>
+   <div style="background:#f4f7f5;padding:30px;border-radius:10px;margin:20px 0">
+    📁 <strong>${esc(p.fileName)}</strong>
+   </div>
+   <a class="primary" style="display:inline-block;text-align:center;text-decoration:none;padding:10px 20px;border-radius:8px" href="${esc(p.fileUrl)}" target="_blank" rel="noopener">Buka / Download Dokumen Asli</a>
+  </div>`;
+}
+
+function closePresentationModal(){ $("presentationModal").style.display="none"; }
+
+/* ================= EVENT LISTENERS ================= */
+$("planUnitType").addEventListener("change",fillPlanUnits);
+$("planUnitName").addEventListener("change",renderPlanTable);
+$("savePlan").addEventListener("click",savePlan);
+$("addPlanRow").addEventListener("click",addPlanRow);
+$("unitType").addEventListener("change",fillUnits);
+$("unitName").addEventListener("change",renderPrograms);
+$("add").addEventListener("click",addProgram);
+
+/* ================= INISIALISASI ================= */
+fillUnits();
+fillPlanUnits();
+renderPlans();
+listenFirestore();
+</script>
+</body>
+</html>
