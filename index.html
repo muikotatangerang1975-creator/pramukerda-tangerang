@@ -262,26 +262,26 @@ th{color:var(--muted);font-size:10px;text-transform:uppercase}
  </div>
 </div>
 
-<!-- FIREBASE SDK (library docx dimuat belakangan, otomatis) -->
+<!-- FIREBASE SDK (CDN COMPAT) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <script>
-// KONFIGURASI FIREBASE
+// KONFIGURASI FIREBASE TERBARU
 const firebaseConfig = {
-  apiKey: "AIzaSyDrJYl5thpitYm7rijw_cv4xmYjylOSpSU",
-  authDomain: "mui-pramukerda.firebaseapp.com",
-  projectId: "mui-pramukerda",
-  storageBucket: "mui-pramukerda.firebasestorage.app",
-  messagingSenderId: "1020591731074",
-  appId: "1:1020591731074:web:1364b1a6ed6b85281b9f9b"
+  apiKey: "AIzaSyAbF2BnKiRDVRxL-RIhFyEeuoQVoyPrdrs",
+  authDomain: "mui-pramukerda-2723e.firebaseapp.com",
+  projectId: "mui-pramukerda-2723e",
+  storageBucket: "mui-pramukerda-2723e.firebasestorage.app",
+  messagingSenderId: "898883917531",
+  appId: "1:898883917531:web:a141a0bce4122ad97a9efe",
+  measurementId: "G-LSMBYJEJSD"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
-// Gagal cepat (20 detik) kalau Storage belum aktif / koneksi bermasalah, bukan menggantung 10 menit
 storage.setMaxUploadRetryTime(20000);
 storage.setMaxOperationRetryTime(20000);
 
@@ -787,7 +787,7 @@ function listenFirestore(){
    if(ch.type==='removed') return;
    const d=ch.doc.data();
    if(d.unit && Array.isArray(d.rows) && JSON.stringify(planData[d.unit])!==JSON.stringify(d.rows)){
-    if(typing && d.unit===sel.name) return; // jangan ganggu yang lagi ngetik
+    if(typing && d.unit===sel.name) return;
     planData[d.unit]=d.rows; changed=true;
    }
   });
@@ -1017,7 +1017,7 @@ function addPlanRow(){
  queuePlanSave(key);
 }
 
-/* ================= UPLOAD DOKUMEN (CEPAT + PROGRESS) ================= */
+/* ================= UPLOAD DOKUMEN ================= */
 function setUpload(show,pct,text){
  $("uploadWrap").hidden=!show;
  $("uploadFill").style.width=(pct||0)+"%";
@@ -1071,7 +1071,6 @@ async function savePlan(){
 
  try{
   clearTimeout(timers['plan_'+unitName]);
-  // tabel & file diproses bersamaan, tidak antri
   const tasks=[savePlanRowsFS(unitName)];
   if(file) tasks.push(uploadDoc(file,unitName));
   const res=await Promise.allSettled(tasks);
@@ -1156,7 +1155,6 @@ function triggerDownload(blob,filename){
  setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
 
-// Library docx dimuat di belakang layar supaya halaman tidak tertahan CDN yang lambat
 let docxPromise=null;
 function loadScript(src){
  return new Promise((res,rej)=>{
@@ -1176,7 +1174,6 @@ function ensureDocx(){
  return docxPromise;
 }
 
-// Fallback kalau library docx gagal dimuat: HTML Word dengan ekstensi .doc (bukan .docx)
 function fallbackDoc(title,headers,rows,filename){
  let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><style>@page{size:A4 landscape;margin:2cm}body{font-family:Calibri,Arial;font-size:10pt}h1{text-align:center;color:#23866b;font-size:14pt}table{border-collapse:collapse;width:100%}th,td{border:1px solid #23866b;padding:5pt;vertical-align:top}th{background:#e4f5ed}</style></head><body>';
  h+='<h1>'+esc(title).replace(/\n/g,'<br>')+'</h1><table><tr>'+headers.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr>';
@@ -1358,7 +1355,6 @@ if(!sel.name) sel.name=Object.keys(unitData[sel.type])[0];
 syncSelectors(true);
 renderPlans();
 listenFirestore();
-// siapkan library docx di belakang layar setelah halaman selesai dimuat
 window.addEventListener("load",()=>setTimeout(ensureDocx,800));
 </script>
 </body>
